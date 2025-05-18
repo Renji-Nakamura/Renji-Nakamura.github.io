@@ -43,6 +43,9 @@ async function loadProject(id, number) {
   const descEl  = document.getElementById('project-desc');
   const codeEl  = document.getElementById('source-code');
 
+  // 一時的に空にしてチラ見え防止
+  codeEl.textContent = "";
+
   // 初期テキストセット
   labelEl.textContent = "Project:";
   numEl.textContent   = number;
@@ -50,24 +53,19 @@ async function loadProject(id, number) {
   descEl.textContent  = "// 概要は以下に...";
 
   try {
-   const res  = await fetch(`projects/${id}.txt`);
-   const text = res.ok ? await res.text() : `// Error ${res.status}`;
+    const res  = await fetch(`projects/${id}.txt`);
+    const text = res.ok ? await res.text() : `// Error ${res.status}`;
 
-   // すぐに textContent に入れないようにする
-   // codeEl.textContent = text; ← これは削除
+    // 最初にランダム文字列を入れてチラ見え防止
+    const chars = "!@#$%^&*()_+-=[]{}|;:',.<>?0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    codeEl.textContent = text.replace(/./g, () => chars[Math.floor(Math.random() * chars.length)]);
 
-   // 最初にランダム文字列で見せかけておく（空白でもいい）
-   codeEl.textContent = text.replace(/./g, () => {
-   const chars = "!@#$%^&*()_+-=[]{}|;:',.<>?0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-   return chars[Math.floor(Math.random() * chars.length)];
-  });
-
-  // 少し待ってからアニメーション開始（描画が落ち着いた後）
-  setTimeout(() => {
-    hackerEffect(codeEl, text, 2);
-  }, 50); // 50ms程度がちょうどよい
-} catch (e) {
-  codeEl.textContent = `// Fetch error: ${e.message}`;
+    // すぐにアニメーションを開始
+    setTimeout(() => {
+      hackerEffect(codeEl, text, 2);
+    }, 30);
+  } catch (e) {
+    codeEl.textContent = `// Fetch error: ${e.message}`;
   }
 
   // 各要素にハッカー風エフェクトを適用
