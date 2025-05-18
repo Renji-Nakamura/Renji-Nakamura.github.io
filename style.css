@@ -1,0 +1,248 @@
+/* ================================
+   Variables: フォントスタック定義
+   ================================ */
+:root {
+  --font-sans:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Oxygen-Sans",
+    Ubuntu,
+    Cantarell,
+    "Helvetica Neue",
+    sans-serif;
+  --font-mono:
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    "Liberation Mono",
+    Consolas,
+    "Courier New",
+    monospace;
+}
+
+/* ================================
+   ベーススタイル
+   ================================ */
+
+/* Layout */
+body {
+  margin: 0;
+  padding: 0;
+  background: #1A1A1A;
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 32px;
+  line-height: 1.6;
+  transition: opacity 1s ease;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  margin-left: 70px;   /* 左だけ40px余白 */
+  margin-right: 20px;  /* 右は自動で余白 */
+  box-sizing: border-box;
+}
+
+/* Flexbox order */
+.sidebar-right {
+  order: 1;
+}
+.main {
+  order: 2;
+}
+.sidebar-left {
+  order: 3;
+}
+
+/* Box Model */
+.sidebar-left,
+.sidebar-right,
+.main {
+  box-sizing: border-box;
+  padding: 1em;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;       /* Firefox */
+  -ms-overflow-style: none;    /* IE 10+ */
+}
+.sidebar-left {
+  width: 25%;
+}
+.sidebar-right {
+  width: 25%;
+  padding-top: 0.5em; /* 右サイドバー全体の上余白を詰め気味に */
+}
+.main {
+  width: 50%;
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Scrollbar hidden */
+.sidebar-left::-webkit-scrollbar,
+.sidebar-right::-webkit-scrollbar,
+#source-code::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+/* Typography */
+.sidebar-right .comment {
+  font-size: 0.8em;  /* お好みのサイズに変更してください */
+}
+.sidebar-left p,
+.sidebar-left .comment,
+.sidebar-left .value,
+.sidebar-left .link {
+  font-size: 1em;
+}
+.sidebar-left .meta {
+  font-size: 0.9em;
+}
+.sidebar-right p {
+  font-size: 1.6em;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+.sidebar-left ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.2em;
+  margin-bottom: 0;
+}
+.sidebar-right ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.2em;
+  margin-bottom: 0;
+}
+.sidebar-right li {
+  margin-bottom: 0.3em;
+}
+
+/* Project 表示 */
+.project-label {
+  font-size: 1.6em;
+  color: #888;
+  display: inline-block;        /* transformを効かせるため */
+  transform: translateY(-80px);  /* 好みの数値で上に移動 */
+}
+#project-number,
+.project-link,
+.comment,
+.value,
+.link,
+.meta,
+#project-title {
+  font-family: var(--font-mono);
+}
+#project-number {
+  font-size: 1.6em;
+  color: #4EC9B0;
+  margin-left: 0.5em;
+  display: inline-block;
+  transform: translateY(-80px);
+}
+#project-title {
+  font-size: 1.6em;
+  margin: 0.2em 0 1em;
+  color: white;
+  display: inline-block;
+  transform: translateY(-80px);
+}
+#project-desc {
+  margin-top: -0.5em;  /* 上の余白をマイナスにして少し上に詰める */
+  margin-bottom: 0.5em; /* 下の余白は残す */
+  line-height: 1.2; /* もとの1.6より小さく */
+  font-size: 1.1em;
+  position: relative;
+  top: -80px;  /* 文字だけ上にずらす */
+}
+
+.comment {
+  color: #6A9955;
+  font-size: 1.1em;
+}
+.value {
+  color: #9CDCFE;
+}
+.link {
+  color: #C586C0;
+}
+.meta {
+  color: #CE9178;
+  font-size: 0.9em;
+}
+.project-link {
+  display: block;
+  color: #4EC9B0;
+  text-decoration: none;
+  margin-bottom: 0.5em;
+}
+.project-link:hover {
+  text-decoration: underline;
+}
+.project-link.active {
+  display: inline-block;          /* ← テキスト幅に限定 */
+  background-color: #264653;
+  color: #ffffff;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  pointer-events: none;   /* ← クリック無効化 */
+}
+
+/* Code/Pre elements */
+code,
+pre,
+#source-code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  line-height: 1.4;
+  background-color: none;
+  color: #ffffff;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  display: inline-block;
+  transform: translateY(-80px);
+}
+
+/* Source code scrollbar */
+#source-code {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Visual */
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.hidden-before-animation {
+  visibility: hidden;
+}
+
+/* Animation & Effect */
+.fade-in {
+  animation: fadeIn 2s ease-in-out both;
+}
+
+@keyframes fadeIn {
+  0%   { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
