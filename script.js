@@ -50,12 +50,24 @@ async function loadProject(id, number) {
   descEl.textContent  = "// 概要は以下に...";
 
   try {
-    // projectsフォルダからテキストを取得
-    const res  = await fetch(`projects/${id}.txt`);
-    const text = res.ok ? await res.text() : `// Error ${res.status}`;
-    codeEl.textContent = text;
-  } catch (e) {
-    codeEl.textContent = `// Fetch error: ${e.message}`;
+   const res  = await fetch(`projects/${id}.txt`);
+   const text = res.ok ? await res.text() : `// Error ${res.status}`;
+
+   // すぐに textContent に入れないようにする
+   // codeEl.textContent = text; ← これは削除
+
+   // 最初にランダム文字列で見せかけておく（空白でもいい）
+   codeEl.textContent = text.replace(/./g, () => {
+   const chars = "!@#$%^&*()_+-=[]{}|;:',.<>?0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+   return chars[Math.floor(Math.random() * chars.length)];
+  });
+
+  // 少し待ってからアニメーション開始（描画が落ち着いた後）
+  setTimeout(() => {
+    hackerEffect(codeEl, text, 2);
+  }, 50); // 50ms程度がちょうどよい
+} catch (e) {
+  codeEl.textContent = `// Fetch error: ${e.message}`;
   }
 
   // 各要素にハッカー風エフェクトを適用
