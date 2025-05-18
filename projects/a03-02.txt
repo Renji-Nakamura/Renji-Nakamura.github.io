@@ -1,0 +1,25 @@
+a03-02（必須）
+scanf 関数によりキーボードから整数を入力し，
+printf 関数を使用して，自分の誕生日を画面表示するプログラムを作成しなさい．
+
+/*
+ * 課題番号：a02-01
+ * 概要：誕生日を聞いて入力させ、出力するプログラム
+ * 作成年月日：2025/5/1
+ * 学籍番号：bt$scvv#
+ * 氏名：Renji
+ */
+ 
+ 
+#include <stdio.h>
+ 
+int main(void)
+{
+    int no,num;
+    printf("何月生まれですか？\n");
+    scanf("%d", &no);
+    printf("何日生まれですか？");
+    scanf("%d", &num);
+    printf("私の誕生日は%d月%dです",no,num);
+    return 0;
+}

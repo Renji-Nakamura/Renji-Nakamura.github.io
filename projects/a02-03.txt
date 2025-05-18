@@ -1,0 +1,18 @@
+a02-03（自由）
+下記の出力（a.png）を得るプログラムを作成しなさい．
+
+/*
+* 課題番号：a02-03
+ * 概要 Aのピラミッドみたいな文字列を出力する
+ * 作成年月日：25/04/25
+ * 学籍番号：sxmbtr%f$:
+ * 氏名：Renji
+ */
+ 
+ 
+#include <stdio.h>
+ 
+int main(void) {
+    printf("\n     A     \n    A A   \n  AAAAAAA  \n A       A \nA         A\n");
+    return 0;
+}

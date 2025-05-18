@@ -1,0 +1,26 @@
+a03-03（必須）
+scanf 関数によりキーボードから整数 a, b を入力し，
+printf 関数を使用して，これらの積を画面表示するプログラムを作成しなさい．
+
+/*
+ * 課題番号：a03-03
+ * 概要：数字を入力させてその積を求める
+ * 作成年月日：2025/05/1
+ * 学籍番号：vlf^w8(c
+ * 氏名：Renji
+ */
+ 
+ 
+#include <stdio.h>
+ 
+int main(void) {
+    int a,b,x;
+    printf("aとbの積を求めます\n");
+    printf("aを入力してください");
+    scanf("%d",&a);
+    printf("bを入力してください");
+    scanf("%d",&b);
+    x = a*b;
+    printf("a*b=%d",x);
+    return 0;
+}
