@@ -2,8 +2,15 @@
 // ハッカー風エフェクト関数
 // 元テキストの長さのランダム文字列から1文字ずつ元に戻すアニメーション
 // ================================
+// アニメーションIDを要素ごとに保持するマップ
+const hackerEffectMap = new WeakMap();
+
 function hackerEffect(el, text, delay = 50) {
   const chars = "!@#$%^&*()_+-=[]{}|;:',.<>?0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+  // 以前のアニメーションが存在すれば止める
+  const prevInterval = hackerEffectMap.get(el);
+  if (prevInterval) clearInterval(prevInterval);
 
   // 初期表示はランダム文字列
   let display = Array.from(text).map(() => chars[Math.floor(Math.random() * chars.length)]);
@@ -13,14 +20,18 @@ function hackerEffect(el, text, delay = 50) {
   const interval = setInterval(() => {
     if (currentIndex >= text.length) {
       clearInterval(interval);
+      hackerEffectMap.delete(el);
       return;
     }
-    // 1文字ずつ元のテキストに戻す
     display[currentIndex] = text[currentIndex];
     el.textContent = display.join('');
     currentIndex++;
   }, delay);
+
+  // アニメーションIDを保存して次回にキャンセル可能に
+  hackerEffectMap.set(el, interval);
 }
+
 
 // ================================
 // プロジェクト読み込み＆表示更新
