@@ -81,12 +81,17 @@ async function loadProject(id, number) {
 // ================================
 function fadeOutAndLoad(id, number) {
   const mainBlock = document.getElementById('main-block');
+
+  // 一時的に中身を非表示にする
+  const codeEl = document.getElementById('source-code');
+  if (codeEl) codeEl.textContent = "";
+
   mainBlock.classList.add('fade-out');
 
   setTimeout(() => {
     loadProject(id, number);
     mainBlock.classList.remove('fade-out');
-  }, 500); // 500ms 後に読み込み＆フェードイン
+  }, 500);
 }
 
 // ================================
