@@ -7,27 +7,35 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="hidden">
+  <!-- ハンバーガーメニュー用ボタン -->
+  <button id="menu-toggle">☰</button>
+
   <div class="container fade-in">
-    <!-- 左サイド -->
+    <!-- 左サイド（デスクトップのみ） -->
     <div class="sidebar-left">
       <p><span class="comment">// about this website</span></p>
       <ul>
-      <li><a href="#" class="project-link" data-id="About this website">00: Click here</a></li>
+        <li><a href="#" class="project-link" data-id="About this website">00: Click here</a></li>
       </ul>
       <p><span class="comment">// about me</span></p>
-      <p>Name: <span class="value">Renji Nakamura</span><br/>Age: <span class="value">18</span><br/>Affiliation: <span class="value">Iwate Prefectural University</span><br/><span class="value">Faculty of Software and  Information Science</span><br/><span class="value">Grade 1</span></p>
-      <p>Location: <span class="value">Japan Iwate</span></p>
-      <p>Field: <span class="value">I'm still learning.</span></p>
-      <p><span class="comment">// Certification</span><br/>2024/01/18 IT Passport</p>
-      <p><span class="comment">// links</span></p>
-      <p>
-        <a href="https://github.com/Renji-Nakamura" target="_blank" rel="noopener noreferrer" class="link">[github]</a>
-        <a href="mailto:renji1114a@gmail.com" class="link">[contact]</a>
-      </p>
-      <p><span class="meta">// 今年はネットワークの基礎を学び、セキュマネ及び基本情報を取得する。三年次でceh取得が目標。</span></p>
+      <div class="info-block">
+        <p>Name: <span class="value">Renji Nakamura</span><br/>
+           Age: <span class="value">18</span><br/>
+           Affiliation: <span class="value">Iwate Prefectural University</span><br/>
+           <span class="value">Faculty of Software and Information Science</span><br/>
+           <span class="value">Grade 1</span></p>
+        <p>Location: <span class="value">Japan Iwate</span></p>
+        <p>Field: <span class="value">I'm still learning.</span></p>
+        <p><span class="comment">// Certification</span><br/>2024/01/18 IT Passport</p>
+        <p><span class="comment">// links</span><br/>
+          <a href="https://github.com/Renji-Nakamura" target="_blank" class="link">[github]</a>
+          <a href="mailto:renji1114a@gmail.com" class="link">[contact]</a>
+        </p>
+        <p><span class="meta">// 今年はネットワークの基礎を学び…</span></p>
+      </div>
     </div>
 
-    <!-- 中央メイン -->
+    <!-- 中央メイン（赤枠部分） -->
     <div class="main" id="main-block">
       <h1>
         <span class="project-label">Project:</span>
@@ -38,10 +46,12 @@
       <pre id="source-code"></pre>
     </div>
 
-    <!-- 右サイド -->
-    <div class="sidebar-right">
-      <p><span class="comment">// Files</span></p>
+    <!-- 右サイド（リンク一覧／スマホはスライドメニュー） -->
+    <nav class="sidebar-right">
+      <p><span class="comment">// Files Info</span></p>
       <ul>
+        <li class="mobile-only"><a href="#" class="project-link" data-id="information">Info</a></li>
+        <li class="mobile-only"><a href="#" class="project-link" data-id="About this website">00: Click here</a></li>
         <li><a href="#" class="project-link" data-id="a01-01">01: a01-01</a></li>
         <li><a href="#" class="project-link" data-id="a02-01">02: a02-01</a></li>
         <li><a href="#" class="project-link" data-id="a02-02">03: a02-02</a></li>
@@ -57,8 +67,10 @@
         <li><a href="#" class="project-link" data-id="a04-04">13: a04-04</a></li>
         <li><a href="#" class="project-link" data-id="a04-05">14: a04-05</a></li>
         <li><a href="#" class="project-link" data-id="a05-01">15: a05-01</a></li>
+
+        <!-- 以下略 -->
       </ul>
-    </div>
+    </nav>
   </div>
 
   <script src="script.js"></script>
