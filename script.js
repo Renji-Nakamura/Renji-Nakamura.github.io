@@ -43,9 +43,6 @@ async function loadProject(id, number) {
   const descEl  = document.getElementById('project-desc');
   const codeEl  = document.getElementById('source-code');
 
-  // 一時的に空にしてチラ見え防止
-  codeEl.textContent = "";
-
   // 初期テキストセット
   labelEl.textContent = "Project:";
   numEl.textContent   = number;
@@ -53,17 +50,10 @@ async function loadProject(id, number) {
   descEl.textContent  = "// 概要は以下に...";
 
   try {
+    // projectsフォルダからテキストを取得
     const res  = await fetch(`projects/${id}.txt`);
     const text = res.ok ? await res.text() : `// Error ${res.status}`;
-
-    // 最初にランダム文字列を入れてチラ見え防止
-    const chars = "!@#$%^&*()_+-=[]{}|;:',.<>?0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    codeEl.textContent = text.replace(/./g, () => chars[Math.floor(Math.random() * chars.length)]);
-
-    // すぐにアニメーションを開始
-    setTimeout(() => {
-      hackerEffect(codeEl, text, 2);
-    }, 30);
+    codeEl.textContent = text;
   } catch (e) {
     codeEl.textContent = `// Fetch error: ${e.message}`;
   }
@@ -81,64 +71,65 @@ async function loadProject(id, number) {
 // ================================
 function fadeOutAndLoad(id, number) {
   const mainBlock = document.getElementById('main-block');
-
-  // 一時的に中身を非表示にする
-  const codeEl = document.getElementById('source-code');
-  if (codeEl) codeEl.textContent = "";
-
   mainBlock.classList.add('fade-out');
 
   setTimeout(() => {
     loadProject(id, number);
     mainBlock.classList.remove('fade-out');
-  }, 500);
+  }, 500); // 500ms 後に読み込み＆フェードイン
 }
 
 // ================================
 // 初回表示時の処理
 // ================================
-window.addEventListener('DOMContentLoaded', () => {
-  // コンテナにフェードイン効果付与
-  document.querySelector('.container')?.classList.add('fade-in');
+// （略：hackerEffect, loadProject, fadeOutAndLoad はそのまま）
 
-  // 最初のプロジェクトリンクを取得し読み込み
+window.addEventListener('DOMContentLoaded', () => {
+  // ハンバーガーメニュー開閉
+  const menuBtn = document.getElementById('menu-toggle');
+  menuBtn.addEventListener('click', () => {
+    document.body.classList.toggle('menu-open');
+  });
+
+  // プロジェクト／Infoリンク共通のクリック処理
+  document.querySelectorAll('.project-link').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      if (link.classList.contains('active')) return;
+
+      // メニューを閉じる
+      document.body.classList.remove('menu-open');
+
+      // アクティブ切り替え
+      document.querySelectorAll('.project-link').forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+
+      const id = link.dataset.id;
+      const num = link.textContent.split(':')[0];
+
+      if (id === 'information') {
+        // 青枠の about-me 情報をメインに表示
+        const info = document.querySelector('.sidebar-left .info-block').innerText;
+        document.querySelector('.project-label').textContent = '';
+        document.getElementById('project-number').textContent = '';
+        document.getElementById('project-title').textContent = 'About Me';
+        document.getElementById('project-desc').textContent = '';
+        document.getElementById('source-code').textContent = info;
+      } else {
+        // 通常のプロジェクト読み込み
+        fadeOutAndLoad(id, num);
+      }
+    });
+  });
+
+  // 初回ロード
   const first = document.querySelector('.project-link');
   if (first) {
+    first.classList.add('active');
     const [num, id] = first.textContent.split(': ');
-    first.classList.add('active');  // 選択状態に
     loadProject(first.dataset.id, num);
   }
 
-  // bodyのhiddenクラスを1.5秒後に外す（フェードイン用）
-  setTimeout(() => {
-    document.body.classList.remove('hidden');
-  }, 1500);
-});
-
-// ================================
-// プロジェクトリンクのクリックイベント設定
-// ================================
-document.querySelectorAll('.project-link').forEach(link => {
-  link.addEventListener('click', e => {
-    e.preventDefault();
-
-    // すでにアクティブなリンクなら何もしない
-    if (link.classList.contains('active')) return;
-
-    // アクティブ状態を切り替え
-    document.querySelectorAll('.project-link').forEach(l => l.classList.remove('active'));
-    link.classList.add('active');
-
-    const [num, id] = link.textContent.split(': ');
-    fadeOutAndLoad(link.dataset.id, num);
-  });
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const el = document.querySelector(".hidden-before-animation");
-  if (el) {
-    el.style.visibility = "visible";
-    // アニメーションをここで実行
-    startTypeAnimation(el);
-  }
+  // フェードイン解除
+  setTimeout(() => document.body.classList.remove('hidden'), 1500);
 });

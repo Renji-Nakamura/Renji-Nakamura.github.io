@@ -246,3 +246,64 @@ pre,
   opacity: 0;
   transition: opacity 0.5s ease;
 }
+/* （略：既存の変数・ベーススタイルはそのまま） */
+
+/* ハンバーガーボタン */
+#menu-toggle {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1000;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+}
+
+/* スマホ用レスポンシブ */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    margin: 0;
+  }
+  #menu-toggle {
+    display: block;
+  }
+  /* 左サイドは非表示 */
+  .sidebar-left {
+    display: none;
+  }
+  /* 右サイドをオフキャンバスメニュー化 */
+  .sidebar-right {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;           /* ← ここを left:0 に */
+    width: 80%;
+    max-width: 300px;
+    background: #1A1A1A;
+    transform: translateX(-100%); /* ← 右スライドではなく左に隠す */
+    transition: transform 0.3s ease;
+    z-index: 999;
+    overflow-y: auto;
+  }
+
+  /* menu-open 時に左からスライド・イン */
+  body.menu-open .sidebar-right {
+    transform: translateX(0);
+  }
+
+  /* メインは全幅 */
+  .main {
+    width: 100%;
+    margin-top: 3rem;
+  }
+}
+
+/* PC表示では Info リンクを非表示 */
+@media (min-width: 769px) {
+  .sidebar-right .mobile-only {
+    display: none;
+  }
+}
