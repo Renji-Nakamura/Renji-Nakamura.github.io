@@ -1,14 +1,23 @@
-a05-03（自由）
-課題：
-成績（数字）を入力し、以下の説明文を表示するプログラムを作成せよ。
-1→「優秀です」
-2→「良好です」
-3→「可です」
-4→「不可です」
-それ以外→「無効な数字です」
-
-要件：
-scanfで int 型の変数を読み込む。
-switch 文を使って分岐処理を行う。
-default 節で無効入力を処理する。
-
+/*
+ * 課題番号：a05-03
+ * 概要：switch文を使った条件分岐
+ * 作成年月日：25/05/16
+ * 学籍番号：gtr&34#
+ * 氏名：Renji
+ */
+ 
+#include <stdio.h>
+ 
+int main(void) {
+    int x ;
+    printf("成績を入力してください\n"); scanf("%d", &x);
+ 
+    switch (x) {
+        case 1 :  puts("優秀です");       break;
+        case 2 :  puts("良好です");       break;
+        case 3 :  puts("可です");         break;
+        case 4 :  puts("不可です");       break;
+        default : puts("無効な数字です"); break;
+    }
+    return 0;
+}

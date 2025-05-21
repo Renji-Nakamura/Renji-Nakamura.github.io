@@ -1,14 +1,29 @@
-a05-05（自由）
-課題：
-ユーザーから身長（m）と体重（kg）を入力してもらい、BMI（Body Mass Index）を計算し、以下の基準でメッセージを表示するプログラムを作成せよ。
-BMI = 体重(kg) / (身長(m) * 身長(m))
-BMI < 18.5 → 「低体重です」
-BMI < 25.0 → 「普通体重です」
-BMI  >= 25.0 → 「肥満です」
-
-要件：
-scanf を用いて身長・体重をそれぞれ float 型変数に読み込む。
-BMI の計算に浮動小数点演算を用いる。
-if ～ else if ～ else 文による条件分岐を実装する。
-関係演算子（<, >=）を用いて BMI の範囲判定を行う。
-
+/*
+ * 課題番号：a05-05
+ * 概要：BMIを求め、肥満かどうかを判定
+ * 作成年月日：25/05/21
+ * 学籍番号：6u0ng["]+
+ * 氏名：Renji
+ */
+ 
+#include <stdio.h>
+ 
+int main(void) {
+    double h, m, BMI;
+ 
+    printf("身長を入力してください(m)"); scanf("%lf", &h);
+    printf("体重を入力してください(kg)"); scanf("%lf", &m);
+ 
+    BMI = m/(h*h);
+ 
+    printf("BMIは%5.2lfです\n", BMI);
+ 
+    if (BMI < 18.5)
+        printf("低体重です");
+    else if (BMI < 25.0)
+        printf("普通体重です");
+    else
+        printf("肥満です");
+ 
+    return 0;
+}
