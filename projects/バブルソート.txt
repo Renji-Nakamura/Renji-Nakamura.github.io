@@ -1,0 +1,66 @@
+//ランダムな数字のリストの内容を昇順にソート
+
+import random
+
+n = random.randint(0, 30)
+N = []
+hikaku = 0
+for i in range(n):
+    num = random.randint(0, 100)
+    N.append(num)
+print(N)
+for i in range(len(N)-1):
+    for j in range(len(N)-1-i):
+        if N[j] > N[j+1]:
+            hikaku +=1
+            N[j], N[j+1] = N[j+1], N[j]
+print(N)
+print(hikaku)
+
+//出力例
+
+[24, 6, 11, 5, 92, 49, 97, 90, 70, 59, 35, 12, 38, 21, 19, 40, 84, 77, 8, 24, 65]
+[5, 6, 8, 11, 12, 19, 21, 24, 24, 35, 38, 40, 49, 59, 65, 70, 77, 84, 90, 92, 97]
+100
+
+//降順のリスト
+
+#配列,降順10,9,8,7,6,5,4,3,2,1
+import random
+
+N = [10,9,8,7,6,5,4,3,2,1]
+hikaku = 0
+
+for i in range(len(N)-1):
+    for j in range(len(N)-1-i):
+        if N[j] > N[j+1]:
+            hikaku += 1
+            N[j], N[j+1] = N[j+1], N[j]
+print(N)
+print(hikaku)
+
+//出力例
+
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+45
+
+//昇順のリスト
+
+#配列1,2,3,4,5,6,...
+import random
+
+N = [1,2,3,4,5,6,7,8,9,10]
+hikaku= 0
+
+for i in range(len(N)-1):
+    for j in range(len(N)-1-i):
+        if N[j] > N[j+1]:
+            hikaku +=1
+            N[j], N[j+1] = N[j+1], N[j]
+print(N)
+print(hikaku)
+
+//出力例
+
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+0
