@@ -143,7 +143,7 @@ body {
   font-family: var(--font-mono);
 }
 #project-number {
-  font-size: 1.6em;
+  font-size: 1.3em;
   color: #4EC9B0;
   margin-left: 0.5em;
   display: inline-block;
