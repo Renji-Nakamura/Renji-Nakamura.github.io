@@ -5,12 +5,14 @@
 // アニメーションIDを要素ごとに保持するマップ
 const hackerEffectMap = new WeakMap();
 
-function hackerEffect(el, text, delay = 50, step = 1) {
+function hackerEffect(el, text, delay = 50) {
   const chars = "!@#$%^&*()_+-=[]{}|;:',.<>?0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
+  // 以前のアニメーションが存在すれば止める
   const prevInterval = hackerEffectMap.get(el);
   if (prevInterval) clearInterval(prevInterval);
 
+  // 初期表示はランダム文字列
   let display = Array.from(text).map(() => chars[Math.floor(Math.random() * chars.length)]);
   el.textContent = display.join('');
 
@@ -21,15 +23,12 @@ function hackerEffect(el, text, delay = 50, step = 1) {
       hackerEffectMap.delete(el);
       return;
     }
-
-    for (let i = 0; i < step && currentIndex + i < text.length; i++) {
-      display[currentIndex + i] = text[currentIndex + i];
-    }
-
+    display[currentIndex] = text[currentIndex];
     el.textContent = display.join('');
-    currentIndex += step;
+    currentIndex++;
   }, delay);
 
+  // アニメーションIDを保存して次回にキャンセル可能に
   hackerEffectMap.set(el, interval);
 }
 
@@ -52,19 +51,19 @@ async function loadProject(id, number) {
 
   try {
     // projectsフォルダからテキストを取得
-    const res  = await fetch(`projects/${id}.txt`);
-    const text = res.ok ? await res.text() : `// Error ${res.status}`;
+    const res  = await fetch(projects/${id}.txt);
+    const text = res.ok ? await res.text() : // Error ${res.status};
     codeEl.textContent = text;
   } catch (e) {
-    codeEl.textContent = `// Fetch error: ${e.message}`;
+    codeEl.textContent = // Fetch error: ${e.message};
   }
 
   // 各要素にハッカー風エフェクトを適用
   hackerEffect(labelEl, "Project:", 50);
   hackerEffect(numEl, number, 50);
-  hackerEffect(titleEl, id, 20, 1);
-  hackerEffect(descEl, "// 概要は以下に...", 50, 1);
-  hackerEffect(codeEl, codeEl.textContent, 2, 10);
+  hackerEffect(titleEl, id, 20);
+  hackerEffect(descEl, "// 概要は以下に...", 50);
+  hackerEffect(codeEl, codeEl.textContent, 2);
 }
 
 // ================================
