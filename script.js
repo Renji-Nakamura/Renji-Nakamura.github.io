@@ -5,14 +5,12 @@
 // アニメーションIDを要素ごとに保持するマップ
 const hackerEffectMap = new WeakMap();
 
-function hackerEffect(el, text, delay = 50) {
+function hackerEffect(el, text, delay = 50, step = 1) {
   const chars = "!@#$%^&*()_+-=[]{}|;:',.<>?0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-  // 以前のアニメーションが存在すれば止める
   const prevInterval = hackerEffectMap.get(el);
   if (prevInterval) clearInterval(prevInterval);
 
-  // 初期表示はランダム文字列
   let display = Array.from(text).map(() => chars[Math.floor(Math.random() * chars.length)]);
   el.textContent = display.join('');
 
@@ -23,12 +21,15 @@ function hackerEffect(el, text, delay = 50) {
       hackerEffectMap.delete(el);
       return;
     }
-    display[currentIndex] = text[currentIndex];
+
+    for (let i = 0; i < step && currentIndex + i < text.length; i++) {
+      display[currentIndex + i] = text[currentIndex + i];
+    }
+
     el.textContent = display.join('');
-    currentIndex++;
+    currentIndex += step;
   }, delay);
 
-  // アニメーションIDを保存して次回にキャンセル可能に
   hackerEffectMap.set(el, interval);
 }
 
