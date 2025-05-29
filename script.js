@@ -61,9 +61,9 @@ async function loadProject(id, number) {
   // 各要素にハッカー風エフェクトを適用
   hackerEffect(labelEl, "Project:", 50);
   hackerEffect(numEl, number, 50);
-  hackerEffect(titleEl, id, 20);
-  hackerEffect(descEl, "// 概要は以下に...", 50);
-  hackerEffect(codeEl, codeEl.textContent, 2);
+  hackerEffect(titleEl, id, 20, 1);
+  hackerEffect(descEl, "// 概要は以下に...", 50, 1);
+  hackerEffect(codeEl, codeEl.textContent, 2, 10);
 }
 
 // ================================
