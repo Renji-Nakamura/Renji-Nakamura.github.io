@@ -73,7 +73,7 @@ async function loadProject(id, number) {
   hackerEffect(numEl, number, 300);
   hackerEffect(titleEl, id, 500);
   hackerEffect(descEl, "// 概要は以下に...", 400);
-  hackerEffect(codeEl, codeEl.textContent, codeEl.textContent.length * 2);
+  hackerEffect(codeEl, codeEl.textContent, codeEl.textContent.length * 7);
 }
 
 // ================================
