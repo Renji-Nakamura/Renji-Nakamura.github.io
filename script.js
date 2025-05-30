@@ -1,36 +1,46 @@
 // ================================
-// ハッカー風エフェクト関数
-// 元テキストの長さのランダム文字列から1文字ずつ元に戻すアニメーション
+// ハッカー風スクランブルエフェクト（高速版）
 // ================================
-// アニメーションIDを要素ごとに保持するマップ
+
 const hackerEffectMap = new WeakMap();
 
-function hackerEffect(el, text, delay = 50) {
-  const chars = "!@#$%^&*()_+-=[]{}|;:',.<>?0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+function hackerEffect(el, text, duration = 1000) {
+  const chars = "!<>-_\\/[]{}—=+*^?#________";
+  const totalFrames = Math.max(1, Math.floor(duration / (1000 / 60))); // 60FPSベース
+  const charsPerFrame = text.length / totalFrames;
 
-  // 以前のアニメーションが存在すれば止める
-  const prevInterval = hackerEffectMap.get(el);
-  if (prevInterval) clearInterval(prevInterval);
+  const prevAnimation = hackerEffectMap.get(el);
+  if (prevAnimation) cancelAnimationFrame(prevAnimation);
 
-  // 初期表示はランダム文字列
-  let display = Array.from(text).map(() => chars[Math.floor(Math.random() * chars.length)]);
-  el.textContent = display.join('');
+  let frame = 0;
+  let progress = 0;
+  let rafId;
 
-  let currentIndex = 0;
-  const interval = setInterval(() => {
-    if (currentIndex >= text.length) {
-      clearInterval(interval);
-      hackerEffectMap.delete(el);
-      return;
+  function randomChar() {
+    return chars[Math.floor(Math.random() * chars.length)];
+  }
+
+  function update() {
+    let output = '';
+    for (let i = 0; i < text.length; i++) {
+      output += i < Math.floor(progress) ? text[i] : randomChar();
     }
-    display[currentIndex] = text[currentIndex];
-    el.textContent = display.join('');
-    currentIndex++;
-  }, delay);
 
-  // アニメーションIDを保存して次回にキャンセル可能に
-  hackerEffectMap.set(el, interval);
+    el.textContent = output;
+
+    if (progress < text.length) {
+      progress += charsPerFrame;
+      rafId = requestAnimationFrame(update);
+      hackerEffectMap.set(el, rafId);
+    } else {
+      el.textContent = text;
+      hackerEffectMap.delete(el);
+    }
+  }
+
+  update();
 }
+
 
 
 // ================================
@@ -49,21 +59,21 @@ async function loadProject(id, number) {
   titleEl.textContent = id;
   descEl.textContent  = "// 概要は以下に...";
 
-  try {
-    // projectsフォルダからテキストを取得
-    const res  = await fetch(projects/${id}.txt);
-    const text = res.ok ? await res.text() : // Error ${res.status};
-    codeEl.textContent = text;
-  } catch (e) {
-    codeEl.textContent = // Fetch error: ${e.message};
-  }
+ try {
+  // projectsフォルダからテキストを取得（ここを修正）
+  const res  = await fetch(`projects/${id}.txt`);
+  const text = res.ok ? await res.text() : `// Error ${res.status}`;
+  codeEl.textContent = text;
+} catch (e) {
+  codeEl.textContent = `// Fetch error: ${e.message}`;
+}
 
   // 各要素にハッカー風エフェクトを適用
-  hackerEffect(labelEl, "Project:", 50);
-  hackerEffect(numEl, number, 50);
-  hackerEffect(titleEl, id, 20);
-  hackerEffect(descEl, "// 概要は以下に...", 50);
-  hackerEffect(codeEl, codeEl.textContent, 2);
+  hackerEffect(labelEl, "Project:", 300);
+  hackerEffect(numEl, number, 300);
+  hackerEffect(titleEl, id, 500);
+  hackerEffect(descEl, "// 概要は以下に...", 400);
+  hackerEffect(codeEl, codeEl.textContent, codeEl.textContent.length * 2);
 }
 
 // ================================
