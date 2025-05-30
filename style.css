@@ -28,7 +28,7 @@
    ================================ */
 
 /* Layout */
-body {
+html, body {
   margin: 0;
   padding: 0;
   background: #1A1A1A;
@@ -37,13 +37,15 @@ body {
   font-size: 32px;
   line-height: 1.6;
   transition: opacity 1s ease;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
 }
 
 .container {
   display: flex;
   height: 100vh;
-  margin-left: 70px;   /* 左だけ40px余白 */
-  margin-right: 20px;  /* 右は自動で余白 */
+  margin-left: 70px;
+  margin-right: 20px;
   box-sizing: border-box;
 }
 
@@ -67,8 +69,8 @@ body {
   height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
-  scrollbar-width: none;       /* Firefox */
-  -ms-overflow-style: none;    /* IE 10+ */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   scrollbar-gutter: stable;
 }
 .sidebar-left {
@@ -76,7 +78,7 @@ body {
 }
 .sidebar-right {
   width: 25%;
-  padding-top: 0.5em; /* 右サイドバー全体の上余白を詰め気味に */
+  padding-top: 0.5em;
 }
 .main {
   width: 50%;
@@ -96,7 +98,7 @@ body {
 
 /* Typography */
 .sidebar-right .comment {
-  font-size: 0.8em;  /* お好みのサイズに変更してください */
+  font-size: 0.8em;
 }
 .sidebar-left p,
 .sidebar-left .comment,
@@ -112,12 +114,7 @@ body {
   margin-top: 0;
   margin-bottom: 0.5em;
 }
-.sidebar-left ul {
-  list-style: none;
-  padding-left: 0;
-  margin-top: 0.2em;
-  margin-bottom: 0;
-}
+.sidebar-left ul,
 .sidebar-right ul {
   list-style: none;
   padding-left: 0;
@@ -132,8 +129,8 @@ body {
 .project-label {
   font-size: 1.6em;
   color: #888;
-  display: inline-block;        /* transformを効かせるため */
-  transform: translateY(-80px);  /* 好みの数値で上に移動 */
+  display: inline-block;
+  transform: translateY(-80px);
 }
 #project-number,
 .project-link,
@@ -159,12 +156,12 @@ body {
   transform: translateY(-80px);
 }
 #project-desc {
-  margin-top: -0.5em;  /* 上の余白をマイナスにして少し上に詰める */
-  margin-bottom: 0.5em; /* 下の余白は残す */
-  line-height: 1.2; /* もとの1.6より小さく */
+  margin-top: -0.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.2;
   font-size: 1.1em;
   position: relative;
-  top: -80px;  /* 文字だけ上にずらす */
+  top: -80px;
 }
 
 .comment {
@@ -191,12 +188,12 @@ body {
   text-decoration: underline;
 }
 .project-link.active {
-  display: inline-block;          /* ← テキスト幅に限定 */
+  display: inline-block;
   background-color: #264653;
   color: #ffffff;
   padding: 0.2em 0.4em;
   border-radius: 4px;
-  pointer-events: none;   /* ← クリック無効化 */
+  pointer-events: none;
 }
 
 /* Code/Pre elements */
@@ -238,17 +235,14 @@ pre,
 .fade-in {
   animation: fadeIn 2s ease-in-out both;
 }
-
 @keyframes fadeIn {
   0%   { opacity: 0; transform: translateY(10px); }
   100% { opacity: 1; transform: translateY(0); }
 }
-
 .fade-out {
   opacity: 0;
   transition: opacity 0.5s ease;
 }
-/* （略：既存の変数・ベーススタイルはそのまま） */
 
 /* ハンバーガーボタン */
 #menu-toggle {
@@ -272,31 +266,25 @@ pre,
   #menu-toggle {
     display: block;
   }
-  /* 左サイドは非表示 */
   .sidebar-left {
     display: none;
   }
-  /* 右サイドをオフキャンバスメニュー化 */
   .sidebar-right {
     position: fixed;
     top: 0;
     bottom: 0;
-    left: 0;           /* ← ここを left:0 に */
+    left: 0;
     width: 80%;
     max-width: 300px;
     background: #1A1A1A;
-    transform: translateX(-100%); /* ← 右スライドではなく左に隠す */
+    transform: translateX(-100%);
     transition: transform 0.3s ease;
     z-index: 999;
     overflow-y: auto;
   }
-
-  /* menu-open 時に左からスライド・イン */
   body.menu-open .sidebar-right {
     transform: translateX(0);
   }
-
-  /* メインは全幅 */
   .main {
     width: 100%;
     margin-top: 3rem;
