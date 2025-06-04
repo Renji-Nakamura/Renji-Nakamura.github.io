@@ -1,91 +1,760 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Renji's Portfolio</title>
-  <link rel="stylesheet" href="style.css">
-  <!--ファビコン-->
-<link rel="icon" href="/favicon.png" type="image/png">
-<!--Apple用-->
-<link rel="apple-touch-icon" href="/favicon.png">
-<!--高解像度-->
-<link rel="manifest" href="/site.webmanifest">
+  <title>RNPF</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* 基本リセットと全体設定 */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%; /* Ensure html, body take full height for animations */
+      background: #000;
+      color: #0ff;
+      font-family: 'Courier New', Courier, monospace;
+      overflow-x: hidden;
+      perspective: 1200px; /* 3D効果用 */
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* プリローダー */
+    .preloader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    /* グリッチ風テキストアニメーション（プリローダーとセクションタイトル用） */
+    .glitch-analyze-text {
+      font-size: 2rem;
+      letter-spacing: 3px;
+      animation: flicker 1.2s infinite alternate;
+      color: #00ffcc; /* シアン系の緑 */
+      white-space: pre;
+    }
+
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+      }
+      20%, 24%, 55% {
+        opacity: 0.3;
+      }
+    }
+
+    /* メインコンテンツ全体 */
+    .main-content {
+      opacity: 0;
+      transition: opacity 1.5s ease;
+      padding: 2rem 1rem 4rem; /* 追加: 下部スペース確保 */
+      max-width: 900px;
+      margin: 0 auto;
+      transition: transform 1.6s cubic-bezier(0.22, 1, 0.36, 1), filter 1.6s ease, opacity 1.5s ease; /* 追加: トランジションを統合 */
+      will-change: transform, filter, opacity; /* 追加: パフォーマンス最適化 */
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ヘッダー */
+    header {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      position: relative;
+    }
+
+    /* グリッチ風タイトル (ヘッダーのH1) */
+    h1.glitch-line {
+      font-size: 2.8rem; /* 少し大きく */
+      letter-spacing: 4px; /* 間隔を広く */
+      color: #00ffcc;
+      animation: glitch-flicker 1.4s infinite alternate; /* 以前のグリッチアニメーション */
+      text-align: center;
+      margin: 4rem 0 3rem 0; /* 余白調整 */
+      user-select: none;
+    }
+
+    /* セクション見出し */
+    section h2 {
+      font-size: 2rem;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #0ff;
+      display: inline-block; /* spanに合わせて調整 */
+      position: relative;
+    }
+
+    /* Packet Injectorのリストアイテム (インタラクティブにするため追加) */
+    .project-item {
+      cursor: pointer;
+      color: #0ff;
+      user-select: none;
+      position: relative;
+      padding-left: 1rem;
+      transition: color 0.3s ease;
+    }
+    .project-item:hover {
+      color: #4affff;
+    }
+    .project-item::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: #00ccaa;
+      font-weight: bold;
+    }
+
+    /* モーダル（コード表示部分） - 以前のCSSをそのまま移植 */
+    #modal {
+      position: fixed;
+      top: 50%; left: 50%;
+      width: 80vw;
+      max-width: 900px;
+      height: 70vh;
+      background: linear-gradient(135deg, #001f1f, #004444);
+      box-shadow: 0 0 40px #00ffccaa;
+      border: 2px solid #00ffcc;
+      border-radius: 12px;
+      transform-style: preserve-3d;
+      overflow: hidden;
+      transform-origin: center center;
+      transform: translate(-50%, -50%) scale(0) rotateY(60deg) skew(10deg,5deg);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 10000;
+      backdrop-filter: contrast(1.2) saturate(1.3);
+      transition:
+        transform 1.6s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform, opacity;
+    }
+
+    /* モーダル開いた状態 */
+    #modal.active {
+      transform: translate(-50%, -50%) scale(1) rotateY(0) skew(0,0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* モーダル内部のソースコードエリア */
+    #modal .content {
+      height: 100%;
+      overflow-y: auto;
+      padding: 2rem 3rem 3rem 3rem;
+      font-family: 'Courier New', Courier, monospace;
+      /* ACCESS GRANTEDのような解析アニメーションのため、フォントサイズと文字間隔を設定 */
+      font-size: 1.1rem; /* 少し大きめに調整 */
+      line-height: 1.4; /* 行の高さも調整 */
+      letter-spacing: 1px; /* 文字間隔を調整 */
+      color: #0ff;
+      text-shadow:
+        0 0 8px #00fffca0,
+        0 0 20px #00fffca0, 0 0 30px #00fffca0;
+      background: linear-gradient(135deg, #000a0a, #002222);
+      border-radius: 8px;
+      user-select: text;
+      animation: scrollCode 40s linear infinite; /* 自動スクロールのみ */
+    }
+
+    /* 自動スクロールキーフレーム */
+    @keyframes scrollCode {
+      0% { scroll-top: 0; }
+      100% { scroll-top: 100%; }
+    }
+
+    /* ×閉じるボタン */
+    #modal .close-btn {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      border: 2px solid #0ff;
+      border-radius: 50%;
+      color: #0ff;
+      font-weight: bold;
+      font-size: 24px;
+      line-height: 34px;
+      text-align: center;
+      user-select: none;
+      background: rgba(0,255,255,0.1);
+      box-shadow:
+        0 0 8px #00fffca0,
+        0 0 15px #00fffca0;
+      transition: background 0.3s ease, color 0.3s ease;
+      z-index: 10001; /* モーダルコンテンツより前面に配置 */
+    }
+    #modal .close-btn:hover {
+      background: #0ff;
+      color: #002222;
+    }
+
+    /* グリッチエフェクトのキー (H1用) */
+    @keyframes glitch-flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {opacity: 1;}
+      20%, 24%, 55% {opacity: 0.3;}
+    }
+
+    /* ページ変形時の微細グリッチ */
+    .main-content.distort { /* .main-contentに適用 */
+      animation: subtle-glitch 0.2s infinite alternate;
+      filter: drop-shadow(0 0 6px #00ffccaa);
+    }
+    @keyframes subtle-glitch {
+      0% { filter: drop-shadow(0 0 6px #00ffccaa) hue-rotate(0deg); }
+      50% { filter: drop-shadow(0 0 6px #00ffccaa) hue-rotate(20deg); }
+      100% { filter: drop-shadow(0 0 6px #00ffccaa) hue-rotate(0deg); }
+    }
+
+    /* 背景に薄いノイズとグリッチ */
+    body::before {
+      content: "";
+      pointer-events: none;
+      position: fixed;
+      top:0; left:0;
+      width: 100vw; height: 100vh;
+      background:
+        repeating-radial-gradient(circle at center, rgba(0,255,204,0.05) 0 1px, transparent 1px 3px),
+        repeating-linear-gradient(45deg, transparent 0 5px, rgba(0,255,204,0.02) 5px 6px);
+      animation: noiseAnim 0.15s steps(2) infinite;
+      z-index: 0;
+    }
+    @keyframes noiseAnim {
+      0%, 100% {background-position: 0 0, 0 0;}
+      50% {background-position: 3px 3px, 3px 3px;}
+    }
+  </style>
 </head>
-<body class="hidden">
-  <!--ハンバーガーメニュー-->
-  <button id="menu-toggle">☰</button>
-
-  <div class="container fade-in">
-    <!-- 左-->
-    <div class="sidebar-left">
-      <p><span class="comment">// about this website</span></p>
-      <ul>
-        <li><a href="#" class="project-link" data-id="About this website">About: Click here</a></li>
-      </ul>
-      <p><span class="comment">// about me</span></p>
-      <div class="info-block">
-        <p>Name: <span class="value">Renji Nakamura</span><br/>
-           Age: <span class="value">18</span><br/>
-           Affiliation: <span class="value">Iwate Prefectural University</span><br/>
-           <span class="value">Faculty of Software and Information Science</span><br/>
-           <span class="value">Grade 1</span></p>
-        <p>Location: <span class="value">Japan Iwate</span></p>
-        <p>Field: <span class="value">I'm still learning.</span></p>
-        <p><span class="comment">// Certification</span><br/>2024/01/18 IT Passport</p>
-        <p><span class="comment">// links</span><br/>
-          <a href="https://github.com/Renji-Nakamura" target="_blank" class="link">[github]</a>
-          <a href="mailto:renji1114a@gmail.com" class="link">[contact]</a>
-        </p>
-        <p><span class="meta">// 今年はネットワークの基礎を学び、セキュマネ及び基本情報を取得する。三年次でcehに挑戦してみたい。</span></p>
-      </div>
+<body>
+  <div class="preloader" id="preloader">
+    <div class="preloader-text">
+      <span class="glitch-analyze-text" id="analyze">███████████████</span>
     </div>
-
-    <!--中央-->
-    <div class="main" id="main-block">
-      <h1>
-        <span class="project-label">Project:</span>
-        <span id="project-number"></span>
-      </h1>
-      <h2 id="project-title"></h2>
-      <p id="project-desc"></p>
-      <pre id="source-code"></pre>
-    </div>
-
-    <!--右 -->
-    <nav class="sidebar-right">
-      <p><span class="comment">// Files Info</span></p>
-      <ul>
-        <li class="mobile-only"><a href="#" class="project-link" data-id="information">Info</a></li>
-        <li class="mobile-only"><a href="#" class="project-link" data-id="About this website">About: Click here</a></li>
-        <li><a href="#" class="project-link" data-id="バブルソート">高校(Py):バブルソート</a></li>
-        <li><a href="#" class="project-link" data-id="選択ソート">高校(Py):選択ソート</a></li>
-        <li><a href="#" class="project-link" data-id="挿入ソート">高校(Py):挿入ソート</a></li>
-        <li><a href="#" class="project-link" data-id="a01-01">01: a01-01</a></li>
-        <li><a href="#" class="project-link" data-id="a02-01">02: a02-01</a></li>
-        <li><a href="#" class="project-link" data-id="a02-02">03: a02-02</a></li>
-        <li><a href="#" class="project-link" data-id="a02-03">04: a02-03</a></li>
-        <li><a href="#" class="project-link" data-id="a03-01">05: a03-01</a></li>
-        <li><a href="#" class="project-link" data-id="a03-02">06: a03-02</a></li>
-        <li><a href="#" class="project-link" data-id="a03-03">07: a03-03</a></li>
-        <li><a href="#" class="project-link" data-id="a03-04">08: a03-04</a></li>
-        <li><a href="#" class="project-link" data-id="a03-05">09: a03-05</a></li>
-        <li><a href="#" class="project-link" data-id="a04-01">10: a04-01</a></li>
-        <li><a href="#" class="project-link" data-id="a04-02">11: a04-02</a></li>
-        <li><a href="#" class="project-link" data-id="a04-03">12: a04-03</a></li>
-        <li><a href="#" class="project-link" data-id="a04-04">13: a04-04</a></li>
-        <li><a href="#" class="project-link" data-id="a04-05">14: a04-05</a></li>
-        <li><a href="#" class="project-link" data-id="a05-01">15: a05-01</a></li>
-        <li><a href="#" class="project-link" data-id="a05-02">15: a05-02</a></li>
-        <li><a href="#" class="project-link" data-id="a05-03">15: a05-03(評価待ち)</a></li>
-        <li><a href="#" class="project-link" data-id="a05-04">15: a05-04(評価待ち)</a></li>
-        <li><a href="#" class="project-link" data-id="a05-05">15: a05-05(評価待ち)</a></li>
-
-        
-      </ul>
-    </nav>
   </div>
 
-  <script src="script.js"></script>
+  <div class="main-content" id="main-content">
+    <header>
+      <h1 class="glitch-line">[ ACCESS GRANTED ]</h1>
+    </header>
+
+    <section>
+      <h2><span class="glitch-analyze-text section-title">██████████</span></h2>
+      <p>Welcome to the underground. This is where I share my work.<br>
+        We manipulate bits. We bend protocols. We are the unknown.</p>
+    </section>
+
+    <section>
+      <h2><span class="glitch-analyze-text section-title">██████</span></h2>
+      <p>
+        2025-06-05 03:33AM | Node breached: 203.0.113.42 <br>
+        2025-06-04 11:47PM | Credentials harvested from target alpha.<br>
+        2025-06-04 08:20PM | Reverse shell opened on port 1337.
+      </p>
+    </section>
+
+    <section>
+      <h2><span class="glitch-analyze-text section-title">█████</span></h2>
+      <ul>
+        <li class="project-item" data-project="bubble">バブルソート(高校)</li>
+        <li class="project-item" data-project="selection">選択ソート(高校)</li>
+        <li class="project-item" data-project="insertion">挿入ソート(高校)</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="glitch-analyze-text section-title">██████</span></h2>
+      <p>Encrypted channel: darkgrid://0xff01</p>
+    </section>
+  </div>
+
+  <div id="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="close-btn" aria-label="Close">&times;</button>
+    <pre class="content" id="modal-content" tabindex="0" spellcheck="false">
+// ソースコードや概要はここに動的に入ります
+    </pre>
+  </div>
+
+  <script>
+    // 各プロジェクトのコードや概要テキスト（ここは好きに差し替えてOK）
+    const projectsData = {
+      "bubble": `//リストに対するバブルソートアルゴリズムを実装
+  作成日: 2024 06らへん
+
+//ランダムな数字のリストの内容を昇順にソート
+
+import random
+
+n = random.randint(0, 30)
+N = []
+hikaku = 0
+for i in range(n):
+    num = random.randint(0, 100)
+    N.append(num)
+print(N)
+for i in range(len(N)-1):
+    for j in range(len(N)-1-i):
+        if N[j] > N[j+1]:
+            hikaku +=1
+            N[j], N[j+1] = N[j+1], N[j]
+print(N)
+print(hikaku)
+
+//出力例
+
+[24, 6, 11, 5, 92, 49, 97, 90, 70, 59, 35, 12, 38, 21, 19, 40, 84, 77, 8, 24, 65]
+[5, 6, 8, 11, 12, 19, 21, 24, 24, 35, 38, 40, 49, 59, 65, 70, 77, 84, 90, 92, 97]
+100
+
+//降順のリスト
+
+#配列,降順10,9,8,7,6,5,4,3,2,1
+import random
+
+N = [10,9,8,7,6,5,4,3,2,1]
+hikaku = 0
+
+for i in range(len(N)-1):
+    for j in range(len(N)-1-i):
+        if N[j] > N[j+1]:
+            hikaku += 1
+            N[j], N[j+1] = N[j+1], N[j]
+print(N)
+print(hikaku)
+
+//出力例
+
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+45
+
+//昇順のリスト
+
+#配列1,2,3,4,5,6,...
+import random
+
+N = [1,2,3,4,5,6,7,8,9,10]
+hikaku= 0
+
+for i in range(len(N)-1):
+    for j in range(len(N)-1-i):
+        if N[j] > N[j+1]:
+            hikaku +=1
+            N[j], N[j+1] = N[j+1], N[j]
+print(N)
+print(hikaku)
+
+//出力例
+
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+0
+`,
+
+      "selection": `//リストに対する選択ソートアルゴリズムを実装
+  作成日: 2024 06らへん
+
+//ランダムな数字のリストを昇順にソート
+
+import random
+
+n = random.randint(0, 30)
+N = []
+count=0
+for i in range(n):
+    num = random.randint(0, 100)
+    N.append(num)
+for i in range(len(N)):
+    k=i
+    for j in range(i+1,len(N)):
+        if N[k]>N[j]:
+            k=j
+        count = count+1
+    N[i],N[k] = N[k],N[i]
+    
+print(N)
+print(count)
+
+//出力例
+
+[1, 6, 7, 10, 16, 17, 20, 34, 38, 39, 55, 58, 59, 64, 65, 68, 77, 78, 89, 90, 92, 95, 100]
+253
+
+//降順のリスト
+
+N = [10,9,8,7,6,5,4,3,2,1]
+count = 0
+for i in range(len(N)):
+    k=i
+    for j in range(i+1,len(N)):
+        if N[k]>N[j]:
+            k=j
+        count=count+1
+    N[i],N[k] = N[k],N[i]
+print(N)
+print(count)
+
+//出力例
+
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+45
+
+//昇順のリスト
+
+N = [1,2,3,4,5,6,7,8,9,10]
+count = 0
+for i in range(len(N)):
+    k=i
+    for j in range(i+1,len(N)):
+        if N[k]>N[j]:
+            k=j
+        count=count+1
+    N[i],N[k] = N[k],N[i]
+print(N)
+print(count)
+
+//出力例
+
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+45`,
+
+      "insertion": `//リストに対する挿入ソートアルゴリズムを実装
+  作成日: 2024 06らへん
+
+//ランダムな数字のリストを照準にソート
+
+import random
+n=random.randint(0,30)
+N=[]
+hikaku_counter = 0
+irekae_counter = 0
+for i in range(n):
+    num=random.randint(0,100)
+    N.append(num)
+print(N)    
+for i in range(len(N)):
+    v = N[i]
+    j = i-1
+    while j>=0 and N[j] > v:
+        hikaku_counter += 1
+        N[j+1]=N[j]
+        j=j-1
+        irekae_counter += 1 
+    N[j+1]=v
+print(N)
+print('入れ替え回数',irekae_counter ,'比較回数',hikaku_counter)
+print('計算量',irekae_counter+hikaku_counter)
+
+//出力例
+
+[77, 2, 37, 75, 43, 25, 21, 95, 48, 72, 63, 55, 76, 67, 85, 62]
+[2, 21, 25, 37, 43, 48, 55, 62, 63, 67, 72, 75, 76, 77, 85, 95]
+入れ替え回数 45 比較回数 45
+
+//降順のリスト
+
+N=[10,9,8,7,6,5,4,3,2,1]
+hikaku_counter = 0
+irekae_counter = 0
+print(N)
+for i in range(len(N)):
+    v = N[i]
+    j = i-1
+    while j>=0 and N[j] > v:
+        hikaku_counter += 1
+        N[j+1]=N[j]
+        j=j-1
+        irekae_counter += 1 
+    N[j+1]=v
+print(N)
+print('入れ替え回数',irekae_counter ,'比較回数',hikaku_counter)
+print('計算量',irekae_counter+hikaku_counter)
+
+//出力例
+
+[10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+入れ替え回数 45 比較回数 45
+
+//昇順のリスト
+
+N=[1,2,3,4,5,6,7,8,9,10]
+hikaku_counter = 0
+irekae_counter = 0
+for i in range(len(N)):
+    v = N[i]
+    j = i-1
+    while j>=0 and N[j] > v:
+        hikaku_counter += 1
+        N[j+1]=N[j]
+        j=j-1
+        irekae_counter += 1
+    N[j+1]=v
+print(N)
+print('入れ替え回数',irekae_counter ,'比較回数',hikaku_counter)
+print('計算量',irekae_counter+hikaku_counter)
+
+//出力例
+
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+入れ替え回数 0 比較回数 0`
+    };
+
+    const finalText = "ACCESS GRANTED";
+    const chars = "█▓▒░$#@!%&*ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const analyzeEl = document.getElementById("analyze");
+    const sectionTitlesElements = document.querySelectorAll(".section-title");
+    const titlesText = ["ABOUT", "LOGS", "TOOLS", "CONTACT"];
+
+    // プリローダーのACCESS GRANTEDテキスト解析アニメーション
+    let iterations = 0;
+    function analyzeTextEffect() {
+      let interval = setInterval(() => {
+        analyzeEl.textContent = finalText.split("")
+          .map((char, i) => {
+            if (i < iterations) return finalText[i];
+            return chars[Math.floor(Math.random() * chars.length)];
+          })
+          .join("");
+        iterations += 0.25;
+        if (iterations >= finalText.length) clearInterval(interval);
+      }, 50);
+    }
+
+    // セクションタイトルテキストの解析アニメーション (ロジック修正)
+    function animateSectionTitles() {
+      sectionTitlesElements.forEach((el, idx) => {
+        const text = titlesText[idx];
+        let i = 0;
+        let sectionInterval = setInterval(() => {
+          el.textContent = text.split("").map((char, j) => {
+            if (j < i) return char;
+            return chars[Math.floor(Math.random() * chars.length)];
+          }).join("");
+          i += 0.5; // 解析速度
+          if (i >= text.length) clearInterval(sectionInterval);
+        }, 50); // アニメーション速度
+      });
+    }
+
+    const modal = document.getElementById("modal");
+    const modalContent = document.getElementById("modal-content");
+    const mainContent = document.getElementById("main-content");
+    const closeBtn = modal.querySelector(".close-btn");
+
+    // === アニメーション制御のためのグローバル変数 ===
+    let isAnimating = false; // 全体のアニメーションが実行中か
+    let currentGlitchInterval = null; // メインコンテンツのグリッチ揺らぎ用
+    let currentMainContentInterval = null; // メインコンテンツの変形戻し用
+    let currentModalAnimationInterval = null; // モーダルコンテンツのテキスト解析用
+
+    // すべてのアニメーションタイマーをリセットし、スタイルを初期化する関数
+    function resetAllAnimations() {
+      if (currentGlitchInterval) {
+        clearInterval(currentGlitchInterval);
+        currentGlitchInterval = null;
+      }
+      if (currentMainContentInterval) {
+        clearInterval(currentMainContentInterval);
+        currentMainContentInterval = null;
+      }
+      if (currentModalAnimationInterval) {
+        clearInterval(currentModalAnimationInterval);
+        currentModalAnimationInterval = null;
+      }
+      // メインコンテンツのスタイルも確実にリセット
+      mainContent.style.transform = "";
+      mainContent.style.filter = "";
+      mainContent.classList.remove("distort");
+
+      // モーダルのテキストもクリア
+      modalContent.textContent = "";
+
+      isAnimating = false; // フラグもリセット
+    }
+
+    // モーダルコンテンツのテキスト解析アニメーション
+    function animateModalContent(text) {
+      // 既存のモーダル解析アニメーションがあれば停止
+      if (currentModalAnimationInterval) {
+        clearInterval(currentModalAnimationInterval);
+        currentModalAnimationInterval = null;
+      }
+
+      let currentText = "";
+      let iterationsModal = 0;
+      modalContent.textContent = ""; // テキスト内容をクリアし、アニメーション開始
+
+      const interval = setInterval(() => {
+        currentText = text.split("")
+          .map((char, i) => {
+            if (i < iterationsModal) {
+              return text[i];
+            }
+            if (char === '\n') return '\n';
+            if (char === ' ') return ' ';
+            return chars[Math.floor(Math.random() * chars.length)];
+          })
+          .join("");
+
+        modalContent.textContent = currentText;
+
+        iterationsModal += 0.5; // 解析速度を調整
+
+        if (iterationsModal >= text.length) {
+          clearInterval(interval);
+          modalContent.textContent = text; // 最終的に正しいテキストを表示
+          currentModalAnimationInterval = null; // 完了時にリセット
+        }
+      }, 6); // アニメーション速度を調整（少し速めに）
+
+      currentModalAnimationInterval = interval; // interval IDを保存
+    }
+
+
+    // 開くときの複雑アニメーション関数（Promiseで完了検知）
+    function openModal(projectKey) {
+      // アニメーション実行中であれば処理を中断
+      if (isAnimating) {
+        console.warn("アニメーションが実行中のため、モーダルを開く処理をスキップしました。");
+        return Promise.resolve(); // 既に開いている状態なので、Promiseを解決して終了
+      }
+
+      resetAllAnimations(); // 新しいアニメーションを開始する前にすべてリセット
+      isAnimating = true;
+
+      return new Promise((resolve) => {
+        const contentText = projectsData[projectKey] || "// No data available.";
+
+        modal.classList.add("active");
+        modal.setAttribute("aria-hidden", "false");
+
+        mainContent.classList.add("distort");
+        mainContent.style.transformOrigin = "center center";
+        mainContent.style.transform = "rotateY(15deg) rotateX(5deg) skew(10deg,5deg) scale(0.9)";
+        mainContent.style.filter = "brightness(0.7) drop-shadow(0 0 8px #0ff)";
+
+        let glitchStep = 0;
+        currentGlitchInterval = setInterval(() => { // IDを保存
+          glitchStep++;
+          const angleX = 5 + Math.sin(glitchStep/3)*3;
+          const angleY = 15 + Math.cos(glitchStep/2)*5;
+          const skewX = 10 + Math.sin(glitchStep/5)*7;
+          const skewY = 5 + Math.cos(glitchStep/7)*5;
+          const scale = 0.9 + Math.sin(glitchStep/4)*0.02;
+          mainContent.style.transform = `rotateY(${angleY}deg) rotateX(${angleX}deg) skew(${skewX}deg,${skewY}deg) scale(${scale.toFixed(3)})`;
+        }, 40);
+
+        // モーダルが開くトランジション完了を待ってから、テキスト解析アニメーションを開始
+        setTimeout(() => {
+            animateModalContent(contentText);
+            modalContent.focus(); // テキスト解析アニメーション後にフォーカスを移動
+        }, 1600); // モーダル自身のCSSトランジション時間に合わせて調整
+
+
+        // メインコンテンツの揺らぎ停止と安定状態への遷移はそのまま
+        setTimeout(() => {
+          if (currentGlitchInterval) { // 途中で閉じられていないか確認
+            clearInterval(currentGlitchInterval);
+            currentGlitchInterval = null;
+          }
+          mainContent.style.transform = "rotateY(15deg) rotateX(5deg) skew(10deg,5deg) scale(0.9)";
+          isAnimating = false; // アニメーション完了
+          resolve();
+        }, 2200);
+      });
+    }
+
+    // 閉じるアニメーション
+    function closeModal() {
+      // 閉じるアニメーションは常に実行を試みる (ユーザーが閉じる操作をしたため)
+      // ただし、開始前にすべてのアニメーション状態をリセットする
+      resetAllAnimations(); // 閉じる前にすべてリセット
+
+      isAnimating = true; // 閉じるアニメーション中もフラグを立てる
+
+      return new Promise((resolve) => {
+        // モーダル閉じるのトランジションはCSSに任せるため、先にクラス削除
+        modal.classList.remove("active");
+        modal.setAttribute("aria-hidden", "true");
+        // modalContent.textContent は resetAllAnimations で既にクリア済み
+
+        let step = 0;
+        currentMainContentInterval = setInterval(() => { // IDを保存
+          step++;
+          const progress = step / 40;
+          if(progress >= 1) {
+            if (currentMainContentInterval) {
+              clearInterval(currentMainContentInterval);
+              currentMainContentInterval = null;
+            }
+            mainContent.style.transform = "";
+            mainContent.style.filter = "";
+            mainContent.classList.remove("distort");
+            isAnimating = false; // アニメーション完了
+            resolve();
+          } else {
+            const angleY = 15 * (1 - progress);
+            const angleX = 5 * (1 - progress);
+            const skewX = 10 * (1 - progress);
+            const skewY = 5 * (1 - progress);
+            const scale = 0.9 + 0.1 * progress;
+            mainContent.style.transform = `rotateY(${angleY}deg) rotateX(${angleX}deg) skew(${skewX}deg,${skewY}deg) scale(${scale.toFixed(3)})`;
+            mainContent.style.filter = `brightness(${0.7 + 0.3 * progress}) drop-shadow(0 0 8px #0ff)`;
+          }
+        }, 25);
+      });
+    }
+
+    // クリックでモーダル起動
+    document.querySelectorAll(".project-item").forEach(el => {
+      el.addEventListener("click", async () => {
+        const key = el.dataset.project;
+        if(!key) return;
+        // isAnimatingフラグにより、アニメーション中の連続クリックをブロック
+        if (!isAnimating) { // アニメーション中でなければ開く
+          await openModal(key);
+        } else {
+          console.log("現在アニメーション実行中につき、新しいモーダル開閉はできません。");
+        }
+      });
+    });
+
+    // 閉じるボタン押下
+    closeBtn.addEventListener("click", async () => {
+      // isAnimatingフラグに関わらず、閉じる操作は常に受け付ける
+      await closeModal();
+    });
+
+    // ESCキーでも閉じられるように
+    document.addEventListener("keydown", async (e) => {
+      if(e.key === "Escape" && modal.classList.contains("active")) {
+        // isAnimatingフラグに関わらず、閉じる操作は常に受け付ける
+        await closeModal();
+      }
+    });
+
+    // ページロード時の処理
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        analyzeTextEffect(); // プリローダーのテキストアニメーション
+        animateSectionTitles(); // 各セクションタイトルのアニメーション
+        setTimeout(() => {
+          document.getElementById("preloader").style.display = "none"; // プリローダーを非表示
+          document.getElementById("main-content").style.opacity = 1; // メインコンテンツを表示
+        }, 3000); // ACCESS GRANTEDが表示され、セクションタイトルがアニメーションし終わる頃に隠す
+      }, 500); // ページのロードが始まってから少し遅れて開始
+    });
+  </script>
 </body>
 </html>
