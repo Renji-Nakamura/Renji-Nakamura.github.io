@@ -280,6 +280,7 @@
           <li class="project-item" data-project="bubble">バブルソート(高校)</li>
           <li class="project-item" data-project="selection">選択ソート(高校)</li>
           <li class="project-item" data-project="insertion">挿入ソート(高校)</li>
+          <li class="project-item" data-project="Vernam">独学で暗号第一回(実践中)</li>
         </ul>
       </section>
 
@@ -379,7 +380,74 @@ for i in range(len(N)):
     N[j+1]=v
 print(N)
 print('入れ替え回数',irekae_counter ,'比較回数',hikaku_counter)
-`
+`,
+      "Vernam": `実は私、情報の中でもセキュリティ系の分野に特に興味があります。しかし、今までセキュリティ系の勉強は知識程度のもの(インシデントについてとか、攻撃の名前とか)しかしていなかったので、特に興味のある暗号についてgptなどを使い独学で勉強しようと思います。これはその勉強の記録として残していこうと思います。
+      テキストは光成滋生氏の「クラウドを支えるこれからの暗号技術」を用いて各章の暗号方式を実装して実践的に学ぶという方法をとります。
+      第一章序盤ではVernam暗号が登場します。Vernam暗号とは元の平文と同じ長さのランダムな数字の列をカギとしてXORで暗号化、複合するものです。
+
+      暗号化・復号は、メッセージと鍵の各ビットをXORで計算します。XORのルールは以下の通りです 。
+
+0⊕0=0
+0⊕1=1
+1⊕0=1
+1⊕1=0
+簡単に言うと、「同じなら0、違えば1」になる計算です。
+
+具体例
+
+平文 (m): 9 （2進数で 1001）
+秘密鍵 (r): 13 （2進数で 1101）
+
+これをビットごとにXORで暗号化（Enc(m):=m⊕r）します。
+ 1001  (平文: 9)
+⊕ 1101  (鍵: 13)
+-------
+  0100  (暗号文: 4)
+したがって、暗号文は4になります。
+復号もまったく同じ操作です。暗号文 0100 を同じ鍵 1101 でXORします 。
+ 0100  (暗号文: 4)
+⊕ 1101  (鍵: 13)
+-------
+  1001  (元の平文: 9)
+このように元の平文に戻ります。これは、(m⊕r)⊕r=m というXORの数学的な性質に基づいています 。
+
+この暗号を実際にPythonオードで実装してみたものが以下のコードです。RENJI NAKAMURAという文字列が暗号化され、複合されています。内部動作のトレースについては理解でき次第書きたいと思います。
+
+      import os
+
+# XOR処理
+def xor_bytes(data: bytes, key: bytes) -> bytes:
+    return bytes([b ^ k for b, k in zip(data, key)])
+
+# 暗号化（平文とランダムな鍵を使う）
+def encrypt(plaintext: str) -> tuple[bytes, bytes]:
+    plaintext_bytes = plaintext.encode('utf-8')
+    key = os.urandom(len(plaintext_bytes))  # 完全ランダムな鍵
+    ciphertext = xor_bytes(plaintext_bytes, key)
+    return ciphertext, key
+
+# 復号
+def decrypt(ciphertext: bytes, key: bytes) -> str:
+    decrypted_bytes = xor_bytes(ciphertext, key)
+    return decrypted_bytes.decode('utf-8')
+
+# テスト
+message = "RENJI NAKAMURA"
+ciphertext, key = encrypt(message)
+print(f"暗号文（base16）: {ciphertext.hex()}")
+print(f"鍵（base16）:     {key.hex()}")
+
+decrypted = decrypt(ciphertext, key)
+print(f"復号結果:         {decrypted}")
+
+//出力
+
+暗号文（base16）: 31769f1b47a5716bb1fb37c73d5f
+鍵（base16）:     6333d1510e853f2afaba7a926f1e
+復号結果:         RENJI NAKAMURA
+
+
+`,
     };
 
     const chars = "█▓▒░$#@!%&*ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
