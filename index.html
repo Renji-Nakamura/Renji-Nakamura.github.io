@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RN/ PORTFOLIO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cabin:wght@500&family=Instrument+Serif:ital@0;1&family=Inter:wght@500&family=Manrope:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="hero-section">
+        <!-- Background Canvas -->
+        <div class="canvas-container">
+            <canvas id="bg-canvas"></canvas>
+        </div>
+
+        <!-- Blurred Element -->
+        <div class="blurred-element"></div>
+
+        <!-- Content Wrapper with z-index 2 -->
+        <div class="content-wrapper">
+
+            <!-- Navbar -->
+            <nav class="navbar">
+                <div class="nav-left">
+                    <div class="logo">
+                        <svg width="200" height="25" viewBox="0 0 200 25" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <!-- Name initials in bold white -->
+                            <text x="0" y="20" fill="white" font-family="Inter" font-weight="800" font-size="20"
+                                letter-spacing="-1">RN</text>
+                            <!-- Accent slash and subtitle in theme purple -->
+                            <text x="32" y="20" fill="#7b39fc" font-family="Inter" font-weight="600" font-size="18"
+                                letter-spacing="-0.5">/ PORTFOLIO</text>
+                        </svg>
+                    </div>
+                    <div class="nav-links">
+                        <!-- Unused links removed -->
+                    </div>
+                </div>
+                <div class="nav-right">
+                    <button class="tab-btn active" data-target="about-section">About Me</button>
+                    <button class="tab-btn" data-target="works-section">Works</button>
+                </div>
+            </nav>
+
+            <!-- Content Sections -->
+            <div class="main-content">
+
+                <!-- About Me Section -->
+                <section id="about-section" class="tab-content active">
+                    <div class="about-container">
+                        <div class="profile-header">
+                            <div class="profile-image">
+                                <img src="icon.webp" alt="Profile avatar">
+                            </div>
+                            <h1 class="about-name">R.NAKAMURA --AI/ML</h1>
+                            <p class="about-title">岩手県立大学 ソフトウェア情報学部 1年</p>
+                        </div>
+                        <div class="about-body">
+                            <p class="about-text">画像認識や類似分野について興味があります。全てにおいてまだ浅い知識しか持ってませんが、幅広く手をつけていってます。</p>
+                            <div class="skills-list">
+                                <span class="skill-tag">C</span>
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">Rust</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Works Section -->
+                <section id="works-section" class="tab-content hidden">
+                    <div class="works-viewer">
+                        <button class="nav-arrow prev-project" aria-label="Previous Project">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M15 18l-6-6 6-6" />
+                            </svg>
+                        </button>
+
+                        <div class="preview-area">
+                            <div class="preview-mask">
+                                <img id="project-preview-img" src="" alt="Project Preview">
+                            </div>
+                            <div class="project-info">
+                                <h2 id="project-title">Project Title</h2>
+                                <p id="project-desc">Description of the project</p>
+                            </div>
+                        </div>
+
+                        <button class="nav-arrow next-project" aria-label="Next Project">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 18l6-6-6-6" />
+                            </svg>
+                        </button>
+                    </div>
+                </section>
+
+            </div>
+
+
+
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

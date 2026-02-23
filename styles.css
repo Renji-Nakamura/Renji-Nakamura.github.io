@@ -1,0 +1,367 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #000000;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #000000;
+  overflow: hidden;
+}
+
+/* Background Canvas */
+.canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.canvas-container canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Blurred Background Element */
+.blurred-element {
+  position: absolute;
+  top: 215px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 801px;
+  height: 384px;
+  background-color: #000000;
+  border-radius: 9999px;
+  filter: blur(77.5px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Content wrapper sitting at z-index: 2 */
+.content-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Navbar */
+.navbar {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 16px 120px;
+  height: 102px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-links a {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 4px 10px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  transition: opacity 0.2s ease;
+}
+
+.nav-links a:hover {
+  opacity: 0.8;
+}
+
+/* TABS UI */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tab-btn {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 22px;
+  background-color: transparent;
+  color: #a0a0a0;
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+  color: #ffffff;
+}
+
+.tab-btn.active {
+  background-color: #ffffff;
+  color: #171717;
+  box-shadow: 0px 4px 16px rgba(23, 23, 23, 0.04);
+}
+
+/* Main Content Area */
+.main-content {
+  width: 100%;
+  max-width: 1440px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 20px;
+}
+
+.tab-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.tab-content.hidden {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* About Me Section */
+.about-container {
+  max-width: 600px;
+  width: 100%;
+  background: rgba(25, 20, 40, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 40px;
+  text-align: center;
+}
+
+.profile-header {
+  margin-bottom: 30px;
+}
+
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  overflow: hidden;
+  border: 2px solid #7b39fc;
+  box-shadow: 0 0 20px rgba(123, 57, 252, 0.4);
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-name {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.about-title {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 24px;
+  color: #a0a0a0;
+}
+
+.about-text {
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #e0e0e0;
+  margin-bottom: 30px;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.skill-tag {
+  background: rgba(123, 57, 252, 0.2);
+  border: 1px solid rgba(123, 57, 252, 0.5);
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  color: #e0d0ff;
+}
+
+/* Works Section (Scrub Viewer) */
+.works-viewer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.nav-arrow {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+}
+
+.nav-arrow:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.05);
+}
+
+.nav-arrow:active {
+  transform: scale(0.95);
+}
+
+.preview-area {
+  flex: 1;
+  position: relative;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* This is where the frosted-glass edge blur happens */
+.preview-mask {
+  width: 100%;
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  /* Maintains generic aspect ratio e.g. 16:9 so it doesn't depend on native res */
+  aspect-ratio: 16/9;
+  background: #000;
+}
+
+/* Base image */
+.preview-mask img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+
+  /* Initial state for transition */
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Active state when image is loaded/shown */
+.preview-mask img.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Frosted glass edge overlay */
+.preview-mask::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  /* Apply heavy gaussian blur */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+
+  /* Mask out the center so the blur only applies to the edges */
+  -webkit-mask-image: radial-gradient(ellipse 85% 90% at center,
+      transparent 50%,
+      black 100%);
+  mask-image: radial-gradient(ellipse 85% 90% at center,
+      transparent 50%,
+      black 100%);
+}
+
+.project-info {
+  margin-top: 24px;
+  text-align: center;
+}
+
+#project-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+#project-desc {
+  font-family: 'Manrope', sans-serif;
+  color: #a0a0a0;
+  font-size: 16px;
+}
