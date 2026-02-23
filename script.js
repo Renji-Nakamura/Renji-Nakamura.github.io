@@ -236,22 +236,37 @@ const previewMask = document.querySelector('.preview-mask');
 const projectTitle = document.getElementById('project-title');
 const projectDesc = document.getElementById('project-desc');
 
-// Function to auto-detect how many frames exist for a project
+// Global map to store the resolved extension for each frame
+const frameExtensions = {};
+
+// Function to auto-detect how many frames exist for a project and their extensions
 async function detectFrames(projectId) {
     let count = 0;
+    frameExtensions[projectId] = {}; // Initialize map for this project
+
     while (true) {
         let testNum = (count + 1).toString().padStart(2, '0');
-        let testUrl = `works/${projectId}/${testNum}.png`;
 
-        let exists = await new Promise((resolve) => {
-            const img = new Image();
-            img.onload = () => resolve(true);
-            img.onerror = () => resolve(false);
-            img.src = testUrl;
-        });
+        // Helper to perform the image load check
+        const checkExt = async (ext) => {
+            let testUrl = `works/${projectId}/${testNum}${ext}`;
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => resolve(ext);
+                img.onerror = () => resolve(false);
+                img.src = testUrl;
+            });
+        };
 
-        if (exists) {
+        // GitHub Pages is case-sensitive, so check lowercase then uppercase
+        let foundExt = await checkExt('.png');
+        if (!foundExt) {
+            foundExt = await checkExt('.PNG');
+        }
+
+        if (foundExt) {
             count++;
+            frameExtensions[projectId][count] = foundExt; // Save which extension worked
         } else {
             break; // Stop at first missing image
         }
@@ -302,7 +317,9 @@ function loadProject(index) {
 // Function to calculate and load a specific frame with a crossfade
 function updatePreviewFrame(projectId, frameNumber) {
     const paddedNum = frameNumber.toString().padStart(2, '0');
-    const newSrc = `works/${projectId}/${paddedNum}.png`;
+    // Look up the correct extension (.png or .PNG) detected during init
+    const ext = (frameExtensions[projectId] && frameExtensions[projectId][frameNumber]) || '.png';
+    const newSrc = `works/${projectId}/${paddedNum}${ext}`;
 
     // Create new image element
     const newImg = document.createElement('img');
