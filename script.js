@@ -215,18 +215,6 @@ const projects = [
         title: 'Cafe Wagtailシステム',
         desc: 'プロジェクト演習において、私の所属するグループはCafe Wagtailの販売データ記録及びAIによる販売意思決定支援システムの提案を行いました。プロトタイプ作成を担当。',
         numFrames: 0 // Will auto-detect
-    },
-    {
-        id: 'project-2',
-        title: 'Project Beta',
-        desc: 'Interactive 3D WebGL data visualization.',
-        numFrames: 0 // Will auto-detect
-    },
-    {
-        id: 'project-3',
-        title: 'Project Gamma',
-        desc: 'E-commerce platform with smooth page transitions.',
-        numFrames: 0 // Will auto-detect
     }
 ];
 
