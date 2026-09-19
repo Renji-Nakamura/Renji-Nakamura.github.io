@@ -1,17 +1,16 @@
-import React from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
-import Navbar from './components/Navbar.jsx';
-import Footer from './components/Footer.jsx';
-import Home from './pages/Home.jsx';
-import ProjectDetail from './pages/ProjectDetail.jsx';
-import AgentOpticsDetail from './pages/AgentOpticsDetail.jsx';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import Home from '@/pages/Home';
+import ProjectDetail from '@/pages/ProjectDetail';
+import AgentOpticsDetail from '@/pages/AgentOpticsDetail';
 
 export default function App() {
   const location = useLocation();
 
   return (
-    <div className="relative min-h-screen flex flex-col selection:bg-[#0071E3] selection:text-white overflow-x-hidden">
+    <div className="relative min-h-screen flex flex-col selection:bg-primary selection:text-primary-foreground overflow-x-hidden bg-background">
       <Navbar />
       <main className="flex-grow relative">
         <AnimatePresence>

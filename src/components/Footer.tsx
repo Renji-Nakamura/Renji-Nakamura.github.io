@@ -1,17 +1,16 @@
-import React from 'react';
 import { Github, Linkedin, Mail, ArrowUpRight } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer id="contact" className="bg-[#F5F5F7] py-20 border-t border-[#E3E3E8]/60 text-sm transition-colors">
+    <footer id="contact" className="bg-secondary py-20 border-t border-border/60 text-sm transition-colors">
       <div className="max-w-6xl mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-8">
         
         {/* Left Column: Brand & Copyright */}
         <div>
-          <p className="font-bold text-[#1D1D1F] tracking-tight mb-1 text-center md:text-left">
+          <p className="font-bold text-foreground tracking-tight mb-1 text-center md:text-left">
             Renji
           </p>
-          <p className="text-xs text-[#86868B] font-normal text-center md:text-left">
+          <p className="text-xs text-muted-foreground font-normal text-center md:text-left">
             © {new Date().getFullYear()} Renji. 岩手県立大学 ソフトウェア情報学部 ソフトウェア情報学科
           </p>
         </div>
@@ -22,7 +21,7 @@ export default function Footer() {
             href="https://github.com/Renji-Nakamura" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="group inline-flex items-center space-x-1.5 text-[#86868B] hover:text-[#1D1D1F] transition-colors"
+            className="group inline-flex items-center space-x-1.5 text-muted-foreground hover:text-foreground transition-colors"
           >
             <Github size={16} />
             <span>GitHub</span>
@@ -33,7 +32,7 @@ export default function Footer() {
             href="https://linkedin.com/in/renji" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="group inline-flex items-center space-x-1.5 text-[#86868B] hover:text-[#1D1D1F] transition-colors"
+            className="group inline-flex items-center space-x-1.5 text-muted-foreground hover:text-foreground transition-colors"
           >
             <Linkedin size={16} />
             <span>LinkedIn</span>
@@ -42,7 +41,7 @@ export default function Footer() {
 
           <a 
             href="mailto:contact@renji.dev" 
-            className="group inline-flex items-center space-x-1.5 text-[#86868B] hover:text-[#0071E3] transition-colors"
+            className="group inline-flex items-center space-x-1.5 text-muted-foreground hover:text-primary transition-colors"
           >
             <Mail size={16} />
             <span>お問い合わせ</span>
