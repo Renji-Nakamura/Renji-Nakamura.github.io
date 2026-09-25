@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import Home from '@/pages/Home';
 import ProjectDetail from '@/pages/ProjectDetail';
 import AgentOpticsDetail from '@/pages/AgentOpticsDetail';
+import MetalGroundDetail from '@/pages/MetalGroundDetail';
 
 export default function App() {
   const location = useLocation();
@@ -18,6 +19,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/project/wagtail" element={<ProjectDetail />} />
             <Route path="/project/agentoptics" element={<AgentOpticsDetail />} />
+            <Route path="/project/metalground" element={<MetalGroundDetail />} />
           </Routes>
         </AnimatePresence>
       </main>

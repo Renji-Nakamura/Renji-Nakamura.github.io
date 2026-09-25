@@ -7,6 +7,11 @@ import AgentOpticsDeliverable from '@/components/AgentOpticsDeliverable';
 export default function AgentOpticsDetail() {
   // Ensure the page starts at the top when entering the detail view
   useLayoutEffect(() => {
+    try {
+      sessionStorage.setItem('portfolio_carousel_active_id', 'agentoptics');
+    } catch {
+      // Ignore storage errors
+    }
     const html = document.documentElement;
     const prevScrollBehavior = html.style.scrollBehavior;
     html.style.scrollBehavior = 'auto';
@@ -36,7 +41,7 @@ export default function AgentOpticsDetail() {
       <div className="max-w-6xl mx-auto px-6 md:px-12 mb-2">
         <Link 
           to="/"
-          state={{ scrollTo: 'projects' }}
+          state={{ scrollTo: 'projects', projectId: 'agentoptics' }}
           className="inline-flex items-center space-x-2 text-sm font-medium text-muted-foreground hover:text-agent transition-colors py-2 group outline-none"
         >
           <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />

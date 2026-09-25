@@ -2,13 +2,13 @@ import { useLayoutEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import KitchenCarDeliverable from '@/components/KitchenCarDeliverable';
+import MetalGroundDeliverable from '@/components/MetalGroundDeliverable';
 
-export default function ProjectDetail() {
+export default function MetalGroundDetail() {
   // Ensure the page starts at the top when entering the detail view
   useLayoutEffect(() => {
     try {
-      sessionStorage.setItem('portfolio_carousel_active_id', 'wagtail');
+      sessionStorage.setItem('portfolio_carousel_active_id', 'metalground');
     } catch {
       // Ignore storage errors
     }
@@ -41,8 +41,8 @@ export default function ProjectDetail() {
       <div className="max-w-6xl mx-auto px-6 md:px-12 mb-2">
         <Link 
           to="/"
-          state={{ scrollTo: 'projects', projectId: 'wagtail' }}
-          className="inline-flex items-center space-x-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors py-2 group outline-none"
+          state={{ scrollTo: 'projects', projectId: 'metalground' }}
+          className="inline-flex items-center space-x-2 text-sm font-medium text-muted-foreground hover:text-orange-500 transition-colors py-2 group outline-none"
         >
           <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
           <span>プロジェクト一覧へ戻る</span>
@@ -51,11 +51,11 @@ export default function ProjectDetail() {
 
       {/* Shared Layout wrapper container */}
       <motion.div 
-        layoutId="project-card-wagtail" 
+        layoutId="project-card-metalground" 
         className="bg-card rounded-3xl origin-top overflow-hidden"
         style={{ backgroundColor: '#ffffff' }}
       >
-        <KitchenCarDeliverable />
+        <MetalGroundDeliverable />
       </motion.div>
     </motion.div>
   );

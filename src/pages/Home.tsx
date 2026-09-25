@@ -2,9 +2,7 @@ import { useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Hero from '@/components/Hero';
 import Interests from '@/components/Interests';
-import ProjectCard from '@/components/ProjectCard';
-import AgentOpticsCard from '@/components/AgentOpticsCard';
-import SectionHeader from '@/components/SectionHeader';
+import ProjectCarousel from '@/components/ProjectCarousel';
 import { motion } from 'framer-motion';
 
 export default function Home() {
@@ -44,18 +42,9 @@ export default function Home() {
       <Interests />
       
       {/* Projects Section */}
-      <section id="projects" className="bg-background py-28 md:py-32 transition-colors">
+      <section id="projects" className="bg-background py-28 md:py-32 transition-colors overflow-hidden">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
-          <SectionHeader
-            label="主要プロジェクト"
-            title="システム開発実績"
-          />
-
-          {/* Project Preview Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl">
-            <ProjectCard />
-            <AgentOpticsCard />
-          </div>
+          <ProjectCarousel />
         </div>
       </section>
     </motion.div>

@@ -6,8 +6,9 @@ export default function Navbar() {
   const location = useLocation();
   const isAgentOptics = location.pathname.includes('/project/agentoptics');
   const isWagtail = location.pathname.includes('/project/wagtail');
-  const isDetail = isAgentOptics || isWagtail;
-  const projectName = isAgentOptics ? 'AgentOptics' : isWagtail ? 'Cafe Wagtail' : '';
+  const isMetalGround = location.pathname.includes('/project/metalground');
+  const isDetail = isAgentOptics || isWagtail || isMetalGround;
+  const projectName = isAgentOptics ? 'AgentOptics' : isWagtail ? 'Cafe Wagtail' : isMetalGround ? 'MetalGround' : '';
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -40,10 +41,15 @@ export default function Navbar() {
           {isDetail ? (
             <Link
               to="/"
-              state={{ scrollTo: 'projects' }}
+              state={{ 
+                scrollTo: 'projects',
+                projectId: isAgentOptics ? 'agentoptics' : isMetalGround ? 'metalground' : 'wagtail'
+              }}
               className={`transition-colors font-semibold ${
                 isAgentOptics
                   ? 'text-agent hover:text-agent/80'
+                  : isMetalGround
+                  ? 'text-orange-500 hover:text-orange-500/80'
                   : 'text-primary hover:text-primary/80'
               }`}
             >
