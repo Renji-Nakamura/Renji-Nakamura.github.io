@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Server, Eye, Database, Activity } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import DecryptedText from '@/components/DecryptedText';
 
 export default function AgentOpticsCard() {
   return (
@@ -27,7 +28,9 @@ export default function AgentOpticsCard() {
               layoutId="project-title-agentoptics"
               className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground group-hover:text-agent transition-colors"
             >
-              AgentOptics
+              <DecryptedText triggerOnView duration={900}>
+                AgentOptics
+              </DecryptedText>
             </motion.h3>
             <p className="text-sm text-muted-foreground font-medium mt-1">エージェント監視プラットフォーム</p>
           </div>

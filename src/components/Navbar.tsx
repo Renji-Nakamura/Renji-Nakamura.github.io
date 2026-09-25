@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { playTerminalBeep } from '@/lib/mfp/useTerminalSound';
 
 export default function Navbar() {
   const location = useLocation();
@@ -11,6 +12,7 @@ export default function Navbar() {
   const projectName = isAgentOptics ? 'AgentOptics' : isWagtail ? 'Cafe Wagtail' : isMetalGround ? 'MetalGround' : '';
 
   const scrollToSection = (id: string) => {
+    playTerminalBeep();
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -41,6 +43,7 @@ export default function Navbar() {
           {isDetail ? (
             <Link
               to="/"
+              onClick={() => playTerminalBeep()}
               state={{ 
                 scrollTo: 'projects',
                 projectId: isAgentOptics ? 'agentoptics' : isMetalGround ? 'metalground' : 'wagtail'

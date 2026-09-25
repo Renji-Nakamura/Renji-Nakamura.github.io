@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import AgentOpticsDeliverable from '@/components/AgentOpticsDeliverable';
+import { playTerminalBeep } from '@/lib/mfp/useTerminalSound';
 
 export default function AgentOpticsDetail() {
   // Ensure the page starts at the top when entering the detail view
@@ -41,6 +42,7 @@ export default function AgentOpticsDetail() {
       <div className="max-w-6xl mx-auto px-6 md:px-12 mb-2">
         <Link 
           to="/"
+          onClick={() => playTerminalBeep()}
           state={{ scrollTo: 'projects', projectId: 'agentoptics' }}
           className="inline-flex items-center space-x-2 text-sm font-medium text-muted-foreground hover:text-agent transition-colors py-2 group outline-none"
         >

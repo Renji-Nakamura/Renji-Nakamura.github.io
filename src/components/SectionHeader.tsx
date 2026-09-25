@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import DecryptedText from '@/components/DecryptedText';
 
 interface SectionHeaderProps {
   label: string;
@@ -10,10 +11,14 @@ export default function SectionHeader({ label, title, className }: SectionHeader
   return (
     <div className={cn("max-w-3xl mb-16 md:mb-20", className)}>
       <h2 className="text-caption font-semibold tracking-widest text-muted-foreground uppercase mb-3 tracking-[0.2em]">
-        {label}
+        <DecryptedText triggerOnView duration={900}>
+          {label}
+        </DecryptedText>
       </h2>
       <p className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
-        {title}
+        <DecryptedText triggerOnView duration={1300} delay={150}>
+          {title}
+        </DecryptedText>
       </p>
     </div>
   );

@@ -5,6 +5,7 @@ import ProjectCard from '@/components/ProjectCard';
 import AgentOpticsCard from '@/components/AgentOpticsCard';
 import MetalGroundCard from '@/components/MetalGroundCard';
 import SectionHeader from '@/components/SectionHeader';
+import { playTerminalBeep } from '@/lib/mfp/useTerminalSound';
 import { cn } from '@/lib/utils';
 
 const SCROLL_STORAGE_KEY = 'portfolio_carousel_scroll';
@@ -172,7 +173,10 @@ export default function ProjectCarousel() {
         <div className="flex items-center space-x-2 self-end sm:self-auto shrink-0 pb-1">
           <button
             type="button"
-            onClick={() => scroll('left')}
+            onClick={() => {
+              playTerminalBeep();
+              scroll('left');
+            }}
             disabled={!canScrollLeft}
             className={cn(
               "w-10 h-10 rounded-full border border-border/80 bg-card flex items-center justify-center text-foreground transition-all shadow-sm outline-none",
@@ -186,7 +190,10 @@ export default function ProjectCarousel() {
           </button>
           <button
             type="button"
-            onClick={() => scroll('right')}
+            onClick={() => {
+              playTerminalBeep();
+              scroll('right');
+            }}
             disabled={!canScrollRight}
             className={cn(
               "w-10 h-10 rounded-full border border-border/80 bg-card flex items-center justify-center text-foreground transition-all shadow-sm outline-none",
@@ -214,6 +221,7 @@ export default function ProjectCarousel() {
             key={item.id}
             data-project-id={item.id}
             onClick={() => {
+              playTerminalBeep();
               try {
                 sessionStorage.setItem(ACTIVE_ID_STORAGE_KEY, item.id);
                 if (scrollRef.current) {
@@ -236,7 +244,10 @@ export default function ProjectCarousel() {
           <button
             key={item.id}
             type="button"
-            onClick={() => scrollToIndex(index)}
+            onClick={() => {
+              playTerminalBeep();
+              scrollToIndex(index);
+            }}
             className={cn(
               "h-2 rounded-full transition-all duration-300 cursor-pointer outline-none",
               activeIndex === index

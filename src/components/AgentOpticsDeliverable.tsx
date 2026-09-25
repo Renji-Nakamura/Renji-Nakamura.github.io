@@ -6,6 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
+import DecryptedText from '@/components/DecryptedText';
+import { playTerminalBeep } from '@/lib/mfp/useTerminalSound';
 
 export default function AgentOpticsDeliverable() {
   const [activeCodeTab, setActiveCodeTab] = useState<'timeboxing' | 'realtime' | 'tasktree'>('timeboxing');
@@ -109,7 +111,9 @@ const getOrCreateAgent = async (name: string, model: string, parentId: string | 
             layoutId="project-title-agentoptics"
             className="text-3xl sm:text-5xl font-bold tracking-tight text-foreground mb-4"
           >
-            AgentOptics
+            <DecryptedText duration={1300} delay={150}>
+              AgentOptics
+            </DecryptedText>
           </motion.h2>
           <p className="text-lg text-muted-foreground font-normal leading-relaxed mb-8">
             自律型AIエージェントの動作やAPIコストをリアルタイムで監視・可視化する「オブザーバビリティ・プラットフォーム」。Vercelのサーバーレス環境特有の制限（タイムアウト）を自律的に回避する堅牢な実行ロジックを備え、技術記事を自動収集・要約する「ナレッジ・キュレーションエージェント」を第一弾の実証モデルとして内包しています。
@@ -276,7 +280,13 @@ const getOrCreateAgent = async (name: string, model: string, parentId: string | 
 
           {/* Switcher Tabs Below the Code Window */}
           <div className="flex justify-start sm:justify-end">
-            <Tabs value={activeCodeTab} onValueChange={(val) => setActiveCodeTab(val as 'timeboxing' | 'realtime' | 'tasktree')}>
+            <Tabs 
+              value={activeCodeTab} 
+              onValueChange={(val) => {
+                playTerminalBeep();
+                setActiveCodeTab(val as 'timeboxing' | 'realtime' | 'tasktree');
+              }}
+            >
               <TabsList>
                 <TabsTrigger value="timeboxing">
                   タイムボクシング機構

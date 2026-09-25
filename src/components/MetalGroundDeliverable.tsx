@@ -22,6 +22,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
+import DecryptedText from '@/components/DecryptedText';
+import { playTerminalBeep } from '@/lib/mfp/useTerminalSound';
 
 export default function MetalGroundDeliverable() {
   const [activeCodeTab, setActiveCodeTab] = useState<'coco' | 'profile' | 'roadmap'>('coco');
@@ -102,7 +104,9 @@ BERT text backbone:     11.41 ms (約1.1%)`,
             layoutId="project-title-metalground"
             className="text-3xl sm:text-5xl font-bold tracking-tight text-foreground mb-4"
           >
-            MetalGround: Autonomous R&amp;D Framework
+            <DecryptedText duration={1400} delay={150}>
+              MetalGround: Autonomous R&amp;D Framework
+            </DecryptedText>
           </motion.h2>
 
           <p className="text-lg text-muted-foreground font-normal leading-relaxed mb-6">
@@ -137,7 +141,7 @@ BERT text backbone:     11.41 ms (約1.1%)`,
           </div>
         </div>
 
-        {/* Highlight Key Metrics Dashboard */}
+        {/* Highlight Key Metrics Dashboard with MFP Decrypt */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-20">
           <Card className="p-6 rounded-2xl bg-secondary/50 border-border/60 flex flex-col justify-between">
             <div className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2 flex items-center justify-between">
@@ -145,7 +149,11 @@ BERT text backbone:     11.41 ms (約1.1%)`,
               <Activity size={16} className="text-orange-500" />
             </div>
             <div>
-              <div className="text-3xl sm:text-4xl font-extrabold text-foreground font-mono tracking-tight">54+</div>
+              <div className="text-3xl sm:text-4xl font-extrabold text-foreground font-mono tracking-tight">
+                <DecryptedText triggerOnView duration={900}>
+                  54+
+                </DecryptedText>
+              </div>
               <p className="text-xs text-muted-foreground mt-1">全12章・約3.9万字に及ぶ解析の軌跡</p>
             </div>
           </Card>
@@ -156,7 +164,11 @@ BERT text backbone:     11.41 ms (約1.1%)`,
               <HardDriveDownload size={16} className="text-emerald-500" />
             </div>
             <div>
-              <div className="text-3xl sm:text-4xl font-extrabold text-foreground font-mono tracking-tight">+0.0007</div>
+              <div className="text-3xl sm:text-4xl font-extrabold text-foreground font-mono tracking-tight">
+                <DecryptedText triggerOnView duration={1200} delay={100}>
+                  +0.0007
+                </DecryptedText>
+              </div>
               <p className="text-xs text-muted-foreground mt-1">47.970 → 47.971 AP（精度妥協ゼロを実証）</p>
             </div>
           </Card>
@@ -167,7 +179,11 @@ BERT text backbone:     11.41 ms (約1.1%)`,
               <Zap size={16} className="text-amber-500" />
             </div>
             <div>
-              <div className="text-3xl sm:text-4xl font-extrabold text-foreground font-mono tracking-tight">2.10x</div>
+              <div className="text-3xl sm:text-4xl font-extrabold text-foreground font-mono tracking-tight">
+                <DecryptedText triggerOnView duration={1000} delay={200}>
+                  2.10x
+                </DecryptedText>
+              </div>
               <p className="text-xs text-muted-foreground mt-1">MPS初期値 1.00 FPS → 2.10 FPS (476ms)</p>
             </div>
           </Card>
@@ -178,7 +194,11 @@ BERT text backbone:     11.41 ms (約1.1%)`,
               <Gauge size={16} className="text-orange-500" />
             </div>
             <div>
-              <div className="text-3xl sm:text-4xl font-extrabold text-foreground font-mono tracking-tight">41.3%</div>
+              <div className="text-3xl sm:text-4xl font-extrabold text-foreground font-mono tracking-tight">
+                <DecryptedText triggerOnView duration={1000} delay={300}>
+                  41.3%
+                </DecryptedText>
+              </div>
               <p className="text-xs text-muted-foreground mt-1">推論全体の4割を占めるMSDA層を単離</p>
             </div>
           </Card>
@@ -300,7 +320,13 @@ BERT text backbone:     11.41 ms (約1.1%)`,
 
           {/* Switcher Tabs Below the Code Window */}
           <div className="flex justify-start sm:justify-end">
-            <Tabs value={activeCodeTab} onValueChange={(val) => setActiveCodeTab(val as 'coco' | 'profile' | 'roadmap')}>
+            <Tabs 
+              value={activeCodeTab} 
+              onValueChange={(val) => {
+                playTerminalBeep();
+                setActiveCodeTab(val as 'coco' | 'profile' | 'roadmap');
+              }}
+            >
               <TabsList>
                 <TabsTrigger value="coco">
                   COCO 5000枚 精度検証

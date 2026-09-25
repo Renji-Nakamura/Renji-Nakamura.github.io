@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Cpu, FileDigit, Bot, BrainCircuit } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import DecryptedText from '@/components/DecryptedText';
 
 export default function MetalGroundCard() {
   return (
@@ -27,7 +28,9 @@ export default function MetalGroundCard() {
               layoutId="project-title-metalground"
               className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground group-hover:text-orange-500 transition-colors"
             >
-              MetalGround
+              <DecryptedText triggerOnView duration={900}>
+                MetalGround
+              </DecryptedText>
             </motion.h3>
             <p className="text-sm text-muted-foreground font-medium mt-1">「AIディレクション &amp; PM」に全振りした研究</p>
           </div>

@@ -6,6 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
+import DecryptedText from '@/components/DecryptedText';
+import { playTerminalBeep } from '@/lib/mfp/useTerminalSound';
 
 export default function KitchenCarDeliverable() {
   const [activeCodeTab, setActiveCodeTab] = useState<'sales' | 'ai' | 'gas'>('sales');
@@ -118,7 +120,9 @@ const handleSendLineMessage = async () => {
             layoutId="project-title-wagtail"
             className="text-3xl sm:text-5xl font-bold tracking-tight text-foreground mb-4"
           >
-            Cafe Wagtail 経営管理システム
+            <DecryptedText duration={1300} delay={150}>
+              Cafe Wagtail 経営管理システム
+            </DecryptedText>
           </motion.h2>
           <p className="text-lg text-muted-foreground font-normal leading-relaxed mb-8">
             先輩を含む6名チームでの要件定義・グループワークを経て、システム設計およびプロトタイプの実装を単独で担当。リアルタイムのPOS売上テレメトリ、在庫レシピの即時連動、需要予測AI、そして技術的課題であったLINE APIへの配信Webhookを統合し、完全サーバレス型の意思決定支援SPAへと組み上げました。
@@ -289,7 +293,13 @@ const handleSendLineMessage = async () => {
 
           {/* Switcher Tabs Below the Code Window */}
           <div className="flex justify-start sm:justify-end">
-            <Tabs value={activeCodeTab} onValueChange={(val) => setActiveCodeTab(val as 'sales' | 'ai' | 'gas')}>
+            <Tabs 
+              value={activeCodeTab} 
+              onValueChange={(val) => {
+                playTerminalBeep();
+                setActiveCodeTab(val as 'sales' | 'ai' | 'gas');
+              }}
+            >
               <TabsList>
                 <TabsTrigger value="sales">
                   アトミック処理
