@@ -13,6 +13,15 @@ export default function Navbar() {
 
   const scrollToSection = (id: string) => {
     playTerminalBeep();
+    if (id === 'projects') {
+      const headerEl = document.getElementById('projects-header') || document.getElementById('projects');
+      const homeEl = document.getElementById('home-container');
+      if (headerEl && homeEl) {
+        const relativeTop = headerEl.getBoundingClientRect().top - homeEl.getBoundingClientRect().top;
+        window.scrollTo({ top: Math.max(0, relativeTop - 32), behavior: 'smooth' });
+        return;
+      }
+    }
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });

@@ -162,7 +162,7 @@ export default function ProjectCarousel() {
   return (
     <div className="relative">
       {/* Header with Navigation Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 md:mb-12 gap-4">
+      <div id="projects-header" className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 md:mb-12 gap-4">
         <SectionHeader
           label="主要プロジェクト &amp; R&amp;D"
           title="開発・研究実績"
