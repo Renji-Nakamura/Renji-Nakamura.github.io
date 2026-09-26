@@ -8,6 +8,7 @@ import {
   Layers,
   CheckCircle2,
   Github,
+  BookOpen,
   Activity,
   Cpu,
   Gauge,
@@ -123,12 +124,12 @@ BERT text backbone:     11.41 ms (約1.1%)`,
               className="rounded-full hover:scale-105 transition-all shadow-sm"
             >
               <a
-                href="https://github.com/Renji-Nakamura"
+                href="https://renji-nakamura.github.io/metalground-docs/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center space-x-2"
               >
-                <Github size={18} />
+                <BookOpen size={18} />
                 <span>完全版のレポートを閲覧する</span>
                 <ExternalLink size={14} className="ml-1 opacity-70" />
               </a>
@@ -271,7 +272,7 @@ BERT text backbone:     11.41 ms (約1.1%)`,
                   </div>
                   <h4 className="font-bold text-foreground mb-2">システム解析の軌跡 &amp; ロードマップ</h4>
                   <p className="text-xs text-muted-foreground leading-relaxed mb-4">
-                    全12章・約2万字に及ぶ完全版技術解説文書（無題のファイル.md）と外部ジャーナル。実験ごとの詳細推論とロードマップをチャット外部に分離・永続化することで、LLM特有のコンテキスト忘却や目的の漂流（Drift）を物理的に完全遮断。
+                    全12章・約2万字に及ぶ完全版技術解説文書（MetalGround: 全容とシステム解析の軌跡）と外部ジャーナル。実験ごとの詳細推論とロードマップをチャット外部に分離・永続化することで、LLM特有のコンテキスト忘却や目的の漂流（Drift）を物理的に完全遮断。
                   </p>
                   <div className="space-y-1.5 text-xs font-mono text-muted-foreground bg-secondary p-3 rounded-xl border border-border/40">
                     <div>📑 全54実験の完全解析（全12章）</div>
@@ -430,12 +431,12 @@ BERT text backbone:     11.41 ms (約1.1%)`,
             className="rounded-full shadow-apple hover:scale-105 transition-all"
           >
             <a
-              href="https://github.com/Renji-Nakamura"
+              href="https://renji-nakamura.github.io/metalground-docs/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center space-x-2"
             >
-              <Github size={18} />
+              <BookOpen size={18} />
               <span>完全版レポート（全容とシステム解析の軌跡）を見る</span>
               <ExternalLink size={14} className="ml-1 opacity-70" />
             </a>
