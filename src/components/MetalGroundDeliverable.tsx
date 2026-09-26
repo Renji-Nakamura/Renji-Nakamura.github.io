@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import {
   Terminal,
   BrainCircuit,
@@ -11,7 +12,6 @@ import {
   Activity,
   Cpu,
   Gauge,
-  ExternalLink,
   ShieldCheck,
   Zap,
   HardDriveDownload,
@@ -122,16 +122,15 @@ BERT text backbone:     11.41 ms (約1.1%)`,
               size="lg"
               className="rounded-full hover:scale-105 transition-all shadow-sm"
             >
-              <a
-                href="https://renji-nakamura.github.io/metalground-docs/"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/project/metalground/docs"
+                onClick={() => playTerminalBeep()}
                 className="inline-flex items-center space-x-2"
               >
                 <BookOpen size={18} />
                 <span>完全版のレポートを閲覧する</span>
-                <ExternalLink size={14} className="ml-1 opacity-70" />
-              </a>
+                <ArrowRight size={14} className="ml-1 opacity-70" />
+              </Link>
             </Button>
 
             <div className="flex items-center space-x-2 text-xs font-mono text-muted-foreground bg-secondary px-4 py-2.5 rounded-full border border-border/60">
@@ -429,16 +428,15 @@ BERT text backbone:     11.41 ms (約1.1%)`,
             size="lg"
             className="rounded-full shadow-apple hover:scale-105 transition-all"
           >
-            <a
-              href="https://renji-nakamura.github.io/metalground-docs/"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/project/metalground/docs"
+              onClick={() => playTerminalBeep()}
               className="inline-flex items-center space-x-2"
             >
               <BookOpen size={18} />
               <span>完全版レポート（全容とシステム解析の軌跡）を見る</span>
-              <ExternalLink size={14} className="ml-1 opacity-70" />
-            </a>
+              <ArrowRight size={14} className="ml-1 opacity-70" />
+            </Link>
           </Button>
         </div>
 

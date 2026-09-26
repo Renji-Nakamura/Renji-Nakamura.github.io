@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import ProjectCard from '@/components/ProjectCard';
 import AgentOpticsCard from '@/components/AgentOpticsCard';
+import ArxivistCard from '@/components/ArxivistCard';
 import MetalGroundCard from '@/components/MetalGroundCard';
 import SectionHeader from '@/components/SectionHeader';
 import { playTerminalBeep } from '@/lib/mfp/useTerminalSound';
@@ -14,6 +15,7 @@ const ACTIVE_ID_STORAGE_KEY = 'portfolio_carousel_active_id';
 const projectItems = [
   { id: 'wagtail', component: <ProjectCard /> },
   { id: 'agentoptics', component: <AgentOpticsCard /> },
+  { id: 'arxivist', component: <ArxivistCard /> },
   { id: 'metalground', component: <MetalGroundCard /> }
 ];
 

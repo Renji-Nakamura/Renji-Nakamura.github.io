@@ -21,7 +21,7 @@ export default function AgentOpticsCard() {
             >
               <Badge variant="secondary" className="space-x-2 py-1 px-3 text-xs font-semibold">
                 <span className="w-1.5 h-1.5 rounded-full bg-agent inline-block" />
-                <span>2年次AI駆動開発 / 自律型エージェント</span>
+                <span>2年次: AI駆動開発 / 自律型エージェント</span>
               </Badge>
             </motion.div>
             <motion.h3
@@ -40,7 +40,7 @@ export default function AgentOpticsCard() {
         </div>
 
         {/* Abstract Minimalist Visual Preview representing AgentOptics */}
-        <div 
+        <div
           style={{ backgroundColor: '#F5F5F7' }}
           className="my-6 h-[140px] px-6 bg-secondary rounded-2xl border border-border/40 flex flex-col items-center justify-center relative overflow-hidden z-10"
         >

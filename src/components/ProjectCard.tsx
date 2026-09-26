@@ -7,7 +7,7 @@ import DecryptedText from '@/components/DecryptedText';
 export default function ProjectCard() {
   return (
     <Link to="/project/wagtail" className="block group cursor-pointer outline-none h-full">
-      <motion.div 
+      <motion.div
         layoutId="project-card-wagtail"
         style={{ backgroundColor: '#ffffff' }}
         className="bg-card border border-border/60 rounded-3xl p-8 md:p-10 shadow-apple hover:shadow-apple-hover transition-all duration-300 relative overflow-hidden flex flex-col justify-between h-full min-h-[420px]"
@@ -15,16 +15,16 @@ export default function ProjectCard() {
         {/* Top Header */}
         <div className="flex justify-between items-start relative z-10 min-h-[110px]">
           <div>
-            <motion.div 
+            <motion.div
               layoutId="project-category-wagtail"
               className="mb-4 inline-block"
             >
               <Badge variant="secondary" className="space-x-2 py-1 px-3 text-xs font-semibold">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block" />
-                <span>1年次主要開発プロジェクト</span>
+                <span>1年次: 主要開発プロジェクト</span>
               </Badge>
             </motion.div>
-            <motion.h3 
+            <motion.h3
               layoutId="project-title-wagtail"
               className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors"
             >
@@ -40,7 +40,7 @@ export default function ProjectCard() {
         </div>
 
         {/* Abstract Minimalist Visual Preview representing the Kitchen Car app */}
-        <div 
+        <div
           style={{ backgroundColor: '#F5F5F7' }}
           className="my-6 h-[140px] px-6 bg-secondary rounded-2xl border border-border/40 flex flex-col items-center justify-center relative overflow-hidden z-10"
         >
