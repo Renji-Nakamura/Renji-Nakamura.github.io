@@ -7,7 +7,6 @@ import {
   ArrowRight,
   Layers,
   CheckCircle2,
-  Github,
   BookOpen,
   Activity,
   Cpu,
