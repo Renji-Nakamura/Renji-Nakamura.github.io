@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Database, Server, Sparkles, Code, FileText, ArrowRight, Layers, CheckCircle2, Github, Activity, Eye, PlayCircle } from 'lucide-react';
+import { Database, Server, Sparkles, Code, FileText, ArrowRight, Layers, CheckCircle2, Lock, Activity, Eye, PlayCircle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
 import DecryptedText from '@/components/DecryptedText';
@@ -123,24 +122,15 @@ const getOrCreateAgent = async (name: string, model: string, parentId: string | 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="flex items-center"
+            className="space-y-3"
           >
-            <Button
-              asChild
-              variant="dark"
-              size="lg"
-              className="rounded-full hover:scale-105 transition-all shadow-sm"
-            >
-              <a 
-                href="#" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="inline-flex items-center space-x-2"
-              >
-                <Github size={18} />
-                <span>GitHubリポジトリでソースコードを見る</span>
-              </a>
-            </Button>
+            <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-secondary border border-border/80 text-foreground text-xs sm:text-sm font-medium shadow-sm">
+              <Lock size={15} className="text-agent shrink-0" />
+              <span>Private Repository（インフラ・API統制のため非公開）</span>
+            </div>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              ※ 本番稼働インフラおよびAPI認証情報を含むためリポジトリ本体は非公開ですが、中核となるアルゴリズムや判定ロジックは下記のコードビューアにて公開しています。
+            </p>
           </motion.div>
         </div>
 
