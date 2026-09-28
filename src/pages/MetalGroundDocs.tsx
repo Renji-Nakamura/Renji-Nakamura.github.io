@@ -55,7 +55,7 @@ export default function MetalGroundDocs() {
 
           <div className="flex items-center space-x-6 text-xs text-muted-foreground font-mono">
             <a
-              href="https://github.com/Renji-Nakamura"
+              href="https://github.com/Renji-Nakamura/MetalGround"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center space-x-1.5 hover:text-foreground transition-colors"

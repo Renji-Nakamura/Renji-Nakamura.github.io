@@ -15,7 +15,8 @@ import {
   ShieldCheck,
   Zap,
   HardDriveDownload,
-  GitCommit
+  GitCommit,
+  Github
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -131,6 +132,24 @@ BERT text backbone:     11.41 ms (約1.1%)`,
                 <span>完全版のレポートを閲覧する</span>
                 <ArrowRight size={14} className="ml-1 opacity-70" />
               </Link>
+            </Button>
+
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="rounded-full hover:scale-105 transition-all shadow-sm bg-card hover:bg-secondary text-foreground border-border/80"
+            >
+              <a
+                href="https://github.com/Renji-Nakamura/MetalGround"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => playTerminalBeep()}
+                className="inline-flex items-center space-x-2"
+              >
+                <Github size={18} />
+                <span>GitHubリポジトリを見る</span>
+              </a>
             </Button>
 
             <div className="flex items-center space-x-2 text-xs font-mono text-muted-foreground bg-secondary px-4 py-2.5 rounded-full border border-border/60">
